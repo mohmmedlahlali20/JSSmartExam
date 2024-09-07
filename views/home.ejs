@@ -1,0 +1,74 @@
+<%- include('layouts/header') %>
+<section>
+    <div class="container">
+
+        <div class="text-center m-3 p-3">
+            <h1 class="display-4">JSSmartExam</h1>
+            <p class="lead">Welcome to the platform where you can create, manage, and take online exams.</p>
+        </div>
+
+        <div class="row mt-5">
+
+            <div class="col-lg-6 Formateur col-md-6 col-sm-12">
+                <div class="card Formateur shadow-lg border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Formateur Dashboard</h5>
+                        <p class="card-text">Manage your courses, exams, and students efficiently.</p>
+                        <a href="/register" class="btn btn-primary btn-lg mt-3 px-5" style="border-radius: 25px;">
+                            Go to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6  col-md-6 col-sm-12">
+                <div class="card Student shadow-lg border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Student Dashboard</h5>
+                        <p class="card-text">Access your courses, take exams, and track your progress.</p>
+                        <a href="/login" class="btn btn-success btn-lg mt-3 px-5" style="border-radius: 25px;">
+                            Go to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="text-center mt-5">Why JSSmartExam?</h2>
+        <div class="row mt-3  section">
+            <div class="col-lg-4 col-md-6 sectionChild col-sm-12">
+                <div class="card ">
+                    <div class="card-body text-center">
+                        <i class="fas fa-graduation-cap fa-5x text-primary"></i>
+                        <h5 class="card-title">Efficient Learning</h5>
+                        <p class="card-text">Organize your courses, manage exams, and track your progress.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 sectionChild col-sm-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-lock fa-5x text-primary"></i>
+                        <h5 class="card-title">Secure and Private</h5>
+                        <p class="card-text">Access your courses, take exams, and track your progress securely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6  sectionChild col-sm-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-5x text-primary"></i>
+                        <h5 class="card-title">Join and Collaborate</h5>
+                        <p class="card-text">Join other students and work together to create high-quality courses.</p>
+                    </div>
+                </div>
+            </div>
+
+       
+        </div>
+    </div>
+    
+</section>
+<%- include('layouts/script') %>
