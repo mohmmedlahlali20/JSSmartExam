@@ -1,12 +1,4 @@
-.containerRegister {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f8f9fa; 
-    border-radius: 10px;      
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-}
-.bg-wrapper {
+.background-container {
   background-image: url("/images/background.png");
   background-size: cover;
   background-position: center;
@@ -18,7 +10,7 @@
   overflow: hidden;
 }
 
-.bg-overlay::before {
+.background-container::before {
   content: "";
   position: absolute;
   top: 0;
@@ -29,30 +21,30 @@
   backdrop-filter: blur(8px);
 }
 
-.register-box {
-  background-color: rgba(255, 255, 255, 0.2);
+.login-container {
+  background: rgba(255, 255, 255, 0.2);
   padding: 3rem 2rem;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.4);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 450px;
+  width: 350px;
   z-index: 1;
+  transition: all 0.5s ease;
 }
 
-.form-wrapper {
+.login-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.6);
+}
+
+.form-login {
   display: flex;
   flex-direction: column;
 }
 
-.input-row {
-  display: flex;
-  justify-content: space-between;
+.input-style {
   margin-bottom: 1.5rem;
-}
-
-.input-field {
-  width: 48%;
   padding: 0.85rem;
   background-color: rgba(255, 255, 255, 0.95);
   border: none;
@@ -62,21 +54,13 @@
   color: #333;
 }
 
-.input-full-width {
-  margin-bottom: 1.5rem;
-}
-
-.input-full-width .input-field {
-  width: 100%;
-}
-
-.input-field:focus {
+.input-style:focus {
   outline: none;
   box-shadow: 0 0 0 3px #007bff;
   background-color: rgba(255, 255, 255, 1);
 }
 
-.register-btn {
+.submit-btn {
   background-color: #007bff;
   color: white;
   border: none;
@@ -90,49 +74,40 @@
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
 }
 
-.register-btn:hover {
+.submit-btn:hover {
   background-color: #0056b3;
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.login-text {
+.signup-link {
   text-align: center;
-  margin-top: 2rem;
-  color: rgba(255, 255, 255, 0.8);
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.95rem;
 }
 
-.login-text a {
+.signup-link a {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
-.login-text a:hover {
+.signup-link a:hover {
   color: #0056b3;
 }
 
 @media (max-width: 768px) {
-  .register-box {
+  .login-container {
     width: 80%;
     padding: 2.5rem 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .register-box {
+  .login-container {
     width: 90%;
     padding: 2rem;
-  }
-
-  .input-field {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .input-row {
-    flex-direction: column;
   }
 }
