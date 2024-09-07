@@ -1,53 +1,77 @@
 <%- include('../layouts/header.ejs') %>
-<h1 class="text-center fs-2 fw-bold font-monospace">
-    Welcome to <span class="text-primary">JSSmartExam</span>
-</h1>
-
-<div class="container mt-5">
-    <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-6">
-            <label for="fristName" class="form-label">First name</label>
-            <input type="text" class="form-control" name="fristName" id="fristName"  required>
-
+<div class="bg-wrapper">
+  <div class="bg-overlay">
+    <div class="register-box">
+      <form class="form-wrapper">
+        <div class="input-row">
+          <input
+            class="input-field"
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="First Name..."
+            required
+          />
+          <input
+            class="input-field"
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Last Name..."
+            required
+          />
         </div>
-        <div class="col-md-6">
-            <label for="lastName" class="form-label">Last name</label>
-            <input type="text" class="form-control" name="lastName" id="lastName" required>
-            
+        <div class="input-row">
+          <input
+            class="input-field"
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Address..."
+            required
+          />
+          <input
+            class="input-field"
+            type="date"
+            id="birthday"
+            name="birthday"
+            placeholder="Birthday..."
+            required
+          />
         </div>
-        <div class="col-md-12">
-            <label for="adress" class="form-label">adress</label>
-            <input type="text" class="form-control" name="adress" id="adress" required>
-
+        <div class="input-row">
+          <input
+            class="input-field"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email..."
+            required
+          />
+          <input
+            class="input-field"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password..."
+            required
+          />
         </div>
-        <div class="col-md-12">
-            <label for="dateDeNaissance" class="form-label">la date de naissancce</label>
-            <input type="text" class="form-control" name="dateDeNaissance" id="dateDeNaissance" required>
+        <div class="input-full-width">
+          <input
+            class="input-field"
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm Password..."
+            required
+          />
         </div>
-        <div class="col-md-12">
-            <label for="specialite" class="form-label">specialite</label>
-            <input type="text" class="form-control" name="specialite" id="specialite" required>
-        
-        </div>
-        <div class="col-md-12">
-            <label for="email" class="form-label">email</label>
-            <input type="text" class="form-control" id="email"  name="email" required>
-
-        </div>
-        <div class="col-md-12">
-            <label for="password" class="form-label">password</label>
-            <input type="text" class="form-control" name="password" id="password" required>
-
-        </div>
-        <div class="col-md-12">
-            <label for="confirmePassword" class="form-label">confirmation password</label>
-            <input type="text" class="form-control" name="confirmePassword" id="confirmePassword" required>
-           
-        </div>
-        <div class="col-12 d-flex  align-items-center gap-3 justify-content-end">
-            <a href="/login" class="link-primary ">Login</a>
-            <button class="btn btn-primary" type="submit">Register</button>
-        </div>
-        
-    </form>
+        <button class="register-btn" type="submit">Register</button>
+      </form>
+      <div class="login-text">
+        <p>Already have an account? <a href="./login">Login</a></p>
+      </div>
+    </div>
+  </div>
 </div>
