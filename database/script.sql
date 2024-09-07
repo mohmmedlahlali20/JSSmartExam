@@ -6,6 +6,8 @@ CREATE TABLE Classe (
 CREATE TABLE Formateur (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     date_de_naissance DATE,
     specialite VARCHAR(255),
     adresse VARCHAR(255)
