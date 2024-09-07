@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.navbar-background {
+    background-color: #0D1B2A;
+}
+.navbar-brand {
+    color: #fff;
+}
+.navbar-toggler {
+    border: none;
+}
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"%3E%3Cpath stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /%3E%3C/svg%3E');
+}
+#sidebar {
+    transition: transform 0.3s ease;
+    transform: translateX(-250px); 
+    width: 250px;
+    position: fixed;
+    top: 56px; 
+    left: 0;
+    height: calc(100vh - 56px); 
+    background-color: #1B263B;
+    color: #fff;
+    z-index: 100;
+    justify-content: space-between; 
+
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    background-color: #f8f9fa;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#sidebar.expanded {
+    transform: translateX(0); 
+}
+#sidebar .nav-link {
+    color: #fff;
+}
+#sidebar .nav-link.active {
+    background-color: #0D1B2A;
+    color: #fff;
+}
+.main-content {
+    margin-left: 250px;
+    padding: 15px;
+    transition: margin-left 0.3s ease;
+}
+.main-content.expanded {
+    margin-left: 0;
+}
+@media (max-width: 992px) {
+    #sidebar {
+        width: 50%; 
+        transform: translateX(-100%); 
+    }
+    #sidebar.expanded {
+        transform: translateX(0); 
+    }
+    .main-content {
+        margin-left: 0; 
+    }
+    #sidebarToggle {
+        display: block; 
+    }
+}
+@media (min-width: 992px) {
+    #sidebar {
+        transform: translateX(0); 
+    }
+    #sidebarToggle {
+        display: none; 
+    }
+
+    .main-content {
+        margin-left: 0; 
+    }
+}
+
+.sidebar .nav {
+    flex-grow: 1; /* Makes the nav grow to fill available space */
+}
+.sidebar .user-info {
+    text-align: center;
+}
+.sidebar .user-info span {
+    display: block;
+    margin-top: 10px;
+}
+
+.btnprimary{
+    background-color: #31466e;
+}
+
+.main-content {
+    margin-left: 250px;  
+    padding: 15px;
+    transition: margin-left 0.3s ease;
+}
+.main-content.expanded {
+    margin-left: 0; 
+}
+
+.logo{
+  height: 70%;
+  width: 70%;
+  margin: auto;
+  display: block;
+}

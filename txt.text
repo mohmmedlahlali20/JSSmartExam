@@ -1,0 +1,20 @@
+student {
+    passage,
+    les notes,
+    mesTest, 
+
+}
+
+formateur{
+    param: classe , sujet , niv
+    etudiant , 
+    
+    test,
+    question
+
+}
+
+ajax,
+
+
+local/pqrq,

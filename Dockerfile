@@ -12,4 +12,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-CMD ["node", "index.js"]
+CMD ["nodemon", "index.js"]
