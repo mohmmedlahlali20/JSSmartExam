@@ -1,18 +1,9 @@
 <%- include('../layouts/header.ejs') %>
-<h1 class="text-center fs-2 fw-bold font-monospace">
-    Welcome to <span class="text-primary">JSSmartExam</span>
-</h1>
-
-<div class="containerRegister mt-5">
-    <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-6">
-            <label for="fristName" class="form-label">First name</label>
-            <input type="text" class="form-control" name="fristName" id="fristName"  required>
 
 <div class="bg-wrapper">
   <div class="bg-overlay">
     <div class="register-box">
-      <form class="form-wrapper">
+      <form action="/register" method="POST" class="form-wrapper needs-validation" novalidate>
         <div class="input-row">
           <input
             class="input-field"
@@ -20,34 +11,30 @@
             id="firstName"
             name="firstName"
             placeholder="First Name..."
-            required
-          />
+            required />
           <input
             class="input-field"
             type="text"
             id="lastName"
             name="lastName"
             placeholder="Last Name..."
-            required
-          />
+            required />
         </div>
         <div class="input-row">
           <input
             class="input-field"
             type="text"
-            id="address"
-            name="address"
+            id="adresse"
+            name="adresse"
             placeholder="Address..."
-            required
-          />
+            required />
           <input
             class="input-field"
             type="date"
             id="birthday"
-            name="birthday"
+            name="date_de_naissance"
             placeholder="Birthday..."
-            required
-          />
+            required />
         </div>
         <div class="input-row">
           <input
@@ -56,29 +43,34 @@
             id="email"
             name="email"
             placeholder="Email..."
-            required
-          />
+            required />
           <input
             class="input-field"
+            type="text"
+            id="specialite"
+            name="specialite"
+            placeholder="Speciality..."
+            required />
+        </div>
+        <div class="input-full-width">
+          <input
+            class="input-field mb-3"
             type="password"
             id="password"
             name="password"
             placeholder="Password..."
-            required
-          />
-        </div>
-        <div class="input-full-width">
+            required />
           <input
             class="input-field"
             type="password"
             id="confirmPassword"
             name="confirmPassword"
             placeholder="Confirm Password..."
-            required
-          />
+            required />
         </div>
         <button class="register-btn" type="submit">Register</button>
       </form>
+      
       <div class="login-text">
         <p>Already have an account? <a href="./login">Login</a></p>
       </div>
