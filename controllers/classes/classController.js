@@ -1,24 +1,45 @@
 
-const classModel = require('../../model/classe');
+const classe = require('../../model/classe');
 exports.classe = async (req, res) => {
       res.render('dashboardFormateur/classes/createClass', { title: 'Add new classse' })
 };
 
 
 
-exports.createClass = async (req, res) => {
+
+
+exports.classe = async (req, res) => {
+      const formateurId = req.session.user.id;
+
       try {
-          const { className } = req.body;
-  
-          if (!className) {
-              return res.status(400).json({ error: 'Class name is required' });
-          }
-  
-          await classModel.createClass(className);
-  
-          return res.status(200).json({ message: 'Class added successfully!' });
+            const hasClass = await classe.alreadyHaveClasse(req.db, formateurId);
+
+            if (hasClass) {
+                  return res.redirect('/statique');
+            }
+
+            res.render('dashboardFormateur/classes/createClass', { title: 'Add new classse' });
       } catch (err) {
-          console.error('Error creating class:', err);
-          return res.status(500).json({ error: 'Database error' });
+            console.error('Error checking formateur class:', err);
+            res.status(500).send('An error occurred');
       }
-  };
+};
+
+exports.createClass = async (req, res) => {
+      const { className } = req.body;
+      const formateurId = req.session.user.id;
+
+      if (!className) {
+            return res.status(400).send('Class name is required');
+      }
+
+      try {
+            const result = await classe.createClass(req.db, className, formateurId);
+            console.log('Class created successfully:', result);
+            res.redirect('/statique');
+      } catch (err) {
+            console.error('Error creating class:', err);
+            res.status(500).send('Error creating class');
+      }
+};
+

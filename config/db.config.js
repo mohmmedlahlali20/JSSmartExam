@@ -1,45 +1,13 @@
 
-const mysql = require('mysql2');
 
-class Database {
-    constructor(config) {
-        this.connection = mysql.createConnection(config);
-    }
+const mysql = require('mysql2/promise');
 
- 
+const db = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'mohammed',
+    password: process.env.DB_PASSWORD || 'password',
+    database: process.env.DB_NAME || 'JSSmartExam',
+});
 
-    connect() {
-        this.connection.connect((err) => {
-            if (err) {
-                console.error('Database connection failed: ' + err.stack);
-                return;
-            }
-            console.log('Connected to database.');
-        });
-    }
-
-
-    query(sql, args) {
-        return new Promise((resolve, reject) => {
-            this.connection.query(sql, args, (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve(results);
-            });
-        });
-    }
-
-    close() {
-        return new Promise((resolve, reject) => {
-            this.connection.end((err) => {
-                if (err) {
-                    return reject(err);
-                }
-                resolve();
-            });
-        });
-    }
-}
-
-module.exports = Database;
+module.exports = db;

@@ -1,4 +1,5 @@
-const buttonAddClasse = document.getElementById('addClassBtn')
+const buttonAddClasse = document.getElementById('addClassBtn');
+
 buttonAddClasse.addEventListener('click', function() {
     Swal.fire({
         title: 'Create New Class',
@@ -10,15 +11,14 @@ buttonAddClasse.addEventListener('click', function() {
         preConfirm: (className) => {
             if (!className) {
                 Swal.showValidationMessage('Please enter a class name');
+                return false; // Prevent the Promise from resolving with a falsy value
             }
             return className;
         }
     }).then((result) => {
         if (result.isConfirmed) {
             const className = result.value;
-            Swal.fire(`Class "${className}" has been created!`);
 
-            // Send the class name to the server using fetch API
             fetch('/create-class', {
                 method: 'POST',
                 headers: {
@@ -27,11 +27,28 @@ buttonAddClasse.addEventListener('click', function() {
                 body: JSON.stringify({ className: className })
             }).then(response => {
                 if (response.ok) {
-                    console.log('Class added successfully');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: `Class "${className}" has been created!`,
+                        icon: 'success'
+                    }).then(() => {
+                        window.location.href = '/statique';
+                    });
                 } else {
-                    console.log('Failed to add class');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to create class.',
+                        icon: 'error'
+                    });
                 }
-            }).catch(error => console.error('Error:', error));
+            }).catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while creating the class.',
+                    icon: 'error'
+                });
+            });
         }
     });
 });

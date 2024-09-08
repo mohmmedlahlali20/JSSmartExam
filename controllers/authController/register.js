@@ -1,5 +1,6 @@
-const formateurModel = require('../../model/formateur'); 
+const formateurModel = require('../../model/formateur');
 const bcrypt = require('bcryptjs');
+
 
 exports.getRegisterPage = (req, res) => {
     res.render('auth/register', { title: 'Register', error: null });
@@ -17,18 +18,26 @@ exports.register = async (req, res) => {
     }
 
     try {
-        const existingUser = await formateurModel.getUserByEmail(email, req.db);
-
+        const existingUser = await formateurModel.getFormateurByEmail(email, req.db);
         if (existingUser) {
             return res.render('auth/register', { title: 'Register', error: 'Email already exists' });
         }
 
         const hashedPassword = bcrypt.hashSync(password, 10);
-        await formateurModel.createUser({ firstName, lastName, date_de_naissance, adresse, email, password: hashedPassword, specialite }, req.db);
+
+        await formateurModel.createFormateur({
+            firstName,
+            lastName,
+            date_de_naissance,
+            adresse,
+            email,
+            password: hashedPassword,
+            specialite
+        }, req.db);
 
         res.redirect('/login');
     } catch (err) {
         console.error('Registration error:', err);
-        res.render('auth/register', { title: 'Register', error: 'An error occurred' });
+        res.render('auth/register', { title: 'Register', error: 'An error occurred during registration' });
     }
 };

@@ -22,6 +22,18 @@
                     Dashboard
                 </a>
             </li>
+            <% if (!hasClass) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Add-classe">
+                        Add new class
+                    </a>
+                </li>
+            <% } %>
+            <li class="nav-item">
+                <a class="nav-link" href="/statique">
+                    statistique
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     Orders
@@ -41,7 +53,7 @@
     </div>
     <div class="user-info">
         <span><%= user ? user.firstName + ' ' + user.lastName : 'Name' %></span>
-        <span class="text-muted"><%= user ? user.specialite : 'Specialty' %></span>
+        <span class="text-muted">specialite : <%= user ? user.specialite : 'Specialty' %></span>
     </div>
     
     
