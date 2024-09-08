@@ -1,46 +1,48 @@
 <%- include('header') %>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-background">
-<div class="container-fluid">
-    <button id="sidebarToggle" class="btn btnprimary d-lg-none" type="button">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="navbar-nav mx-auto">
-            <h3 class="navbar-brand text-white fs-2">JSSmartExam</h3>
+    <div class="container-fluid">
+        <button id="sidebarToggle" class="btn btnprimary d-lg-none" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav mx-auto">
+                <h3 class="navbar-brand text-white fs-2">JSSmartExam</h3>
+            </div>
         </div>
     </div>
-</div>
 </nav>
 <nav id="sidebar" class="sidebar">
-<div class="position-sticky">
-    <div class="p-3">
-        <img src="/images/logo.png" class="logo" alt="">
+    <div class="position-sticky">
+        <div class="p-3">
+            <img src="/images/logo.png" class="logo" alt="">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Products
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Customers
+                </a>
+            </li>
+        </ul>
     </div>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                Dashboard
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                Orders
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                Products
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                Customers
-            </a>
-        </li>
-    </ul>
-</div>
-<div class="user-info">
-    <span>Name</span>
-    <span class="text-muted">Specialty</span>
-</div>
+    <div class="user-info">
+        <span><%= user ? user.firstName + ' ' + user.lastName : 'Name' %></span>
+        <span class="text-muted"><%= user ? user.specialite : 'Specialty' %></span>
+    </div>
+    
+    
 </nav>

@@ -1,3 +1,4 @@
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -6,6 +7,7 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const session = require('express-session');
 const mysql = require('mysql2');
+const Swal = require('sweetalert2');
 
 const indexRouter = require('./routes/index');
 
@@ -34,9 +36,12 @@ app.use(session({
   saveUninitialized: false,
   cookie: { secure: false }
 }));
-
 app.use((req, res, next) => {
-  req.db = db;
+  if (req.session && req.session.user) {
+      res.locals.user = req.session.user; 
+  } else {
+      res.locals.user = null;  
+  }
   next();
 });
 app.use('/', indexRouter);

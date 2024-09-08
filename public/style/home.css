@@ -63,3 +63,7 @@
         padding: 15px;
     }
 }
+
+.btnAddClass{
+    float: right;
+}
