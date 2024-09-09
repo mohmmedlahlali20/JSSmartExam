@@ -11,7 +11,7 @@ buttonAddClasse.addEventListener('click', function() {
         preConfirm: (className) => {
             if (!className) {
                 Swal.showValidationMessage('Please enter a class name');
-                return false; // Prevent the Promise from resolving with a falsy value
+                return false; 
             }
             return className;
         }
@@ -32,7 +32,9 @@ buttonAddClasse.addEventListener('click', function() {
                         text: `Class "${className}" has been created!`,
                         icon: 'success'
                     }).then(() => {
-                        window.location.href = '/statique';
+                        setTimeout(() => {
+                            window.location.href = '/statique';
+                        }, 1000); 
                     });
                 } else {
                     Swal.fire({

@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const secretKey = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
-
+console.log(secretKey)
 app.use(session({
   secret: secretKey,
   resave: false,
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
         const formateurId = req.session.user.id;
         const hasClass = await classe.alreadyHaveClasse(req.db, formateurId);
         res.locals.hasClass = hasClass;
-      } else {
+      } else {  
         res.locals.hasClass = false;
       }
       res.locals.user = req.session && req.session.user ? req.session.user : null;
@@ -55,5 +55,5 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
