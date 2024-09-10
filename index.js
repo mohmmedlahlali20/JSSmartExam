@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const secretKey = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
-console.log(secretKey)
+
 app.use(session({
   secret: secretKey,
   resave: false,
@@ -28,7 +28,6 @@ app.use(session({
 }));
  
 
-// midlware
 app.use((req, res, next) => {
   req.db = db; 
   next();

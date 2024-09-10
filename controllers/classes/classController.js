@@ -1,10 +1,5 @@
 
 const classe = require('../../model/classe');
-exports.classe = async (req, res) => {
-      res.render('dashboardFormateur/classes/createClass', { title: 'Add new classse' })
-};
-
-
 
 
 
@@ -36,7 +31,7 @@ exports.createClass = async (req, res) => {
       try {
             const result = await classe.createClass(req.db, className, formateurId);
             console.log('Class created successfully:', result);
-            res.redirect('/statique');
+            res.redirect('/add_etudiant');
       } catch (err) {
             console.error('Error creating class:', err);
             res.status(500).send('Error creating class');

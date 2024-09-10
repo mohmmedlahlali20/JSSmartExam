@@ -36,8 +36,8 @@
             </li>
             <% if(hasClass) {%>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    My class
+                <a class="nav-link" href="/add_etudiant">
+                    Add new student
                 </a>
             </li>
             <% } %>
@@ -51,12 +51,17 @@
                     Customers
                 </a>
             </li>
+            
         </ul>
     </div>
     <div class="user-info">
         <span><%= user ? user.firstName + ' ' + user.lastName : 'Name' %></span>
         <span class="text-muted">specialite : <%= user ? user.specialite : 'Specialty' %></span>
+        <span>    <a class="btn btn-danger w-100" href="/logout">
+            Logout
+        </a></span>
     </div>
     
     
 </nav>
+                                                                                                        
