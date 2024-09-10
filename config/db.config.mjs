@@ -1,6 +1,4 @@
-
-
-const mysql = require('mysql2/promise');
+import mysql from 'mysql2/promise';
 
 const db = mysql.createPool({
     connectionLimit: 10,
@@ -10,4 +8,4 @@ const db = mysql.createPool({
     database: process.env.DB_NAME || 'JSSmartExam',
 });
 
-module.exports = db;
+export default db;

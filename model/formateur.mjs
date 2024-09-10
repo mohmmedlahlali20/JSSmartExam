@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
-exports.getFormateurByEmail = async (email, db) => {
+export const getFormateurByEmail = async (email, db) => {
     try {
         const [results] = await db.query('SELECT * FROM Formateur WHERE email = ?', [email]);
         if (results.length > 0) {
@@ -12,7 +12,9 @@ exports.getFormateurByEmail = async (email, db) => {
         throw err;
     }
 };
-exports.createFormateur = async (user, db) => {
+
+
+export const createFormateur = async (user, db) => {
     try {
         const sql = `
             INSERT INTO Formateur (firstName, lastName, date_de_naissance, specialite, adresse, email, password)
@@ -34,7 +36,7 @@ exports.createFormateur = async (user, db) => {
     }
 };
 
-
-exports.comparePassword = (enteredPassword, storedPassword) => {
+// Function to compare passwords
+export const comparePassword = (enteredPassword, storedPassword) => {
     return bcrypt.compareSync(enteredPassword, storedPassword);
 };

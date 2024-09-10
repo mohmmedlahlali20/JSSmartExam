@@ -1,12 +1,11 @@
-const formateurModel = require('../../model/formateur');
-const bcrypt = require('bcryptjs');
+import { getFormateurByEmail, createFormateur } from '../../model/formateur.mjs';
+import bcrypt from 'bcryptjs';
 
-
-exports.getRegisterPage = (req, res) => {
+export const getRegisterPage = (req, res) => {
     res.render('auth/register', { title: 'Register', error: null });
 };
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
     const { firstName, lastName, date_de_naissance, adresse, email, password, confirmPassword, specialite } = req.body;
 
     if (!firstName || !lastName || !date_de_naissance || !adresse || !email || !password || !confirmPassword || !specialite) {
@@ -18,14 +17,14 @@ exports.register = async (req, res) => {
     }
 
     try {
-        const existingUser = await formateurModel.getFormateurByEmail(email, req.db);
+        const existingUser = await getFormateurByEmail(email, req.db);
         if (existingUser) {
             return res.render('auth/register', { title: 'Register', error: 'Email already exists' });
         }
 
         const hashedPassword = bcrypt.hashSync(password, 10);
 
-        await formateurModel.createFormateur({
+        await createFormateur({
             firstName,
             lastName,
             date_de_naissance,

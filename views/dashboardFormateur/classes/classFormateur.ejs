@@ -9,36 +9,40 @@
         </div>
     </div>
     
-    <div class="table-responsive tabels">
-        <table id="basic-datatable" class="table bg-white dt-responsive nowrap w-100">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Date of Birth</th>
-                    <th>Registration Date</th>
-                    <th>Address</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Class</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% Apprenants.forEach(Appren => { %>
+    
+        <div class="table-responsive tabels">
+            <table id="basic-datatable" class="table bg-white dt-responsive nowrap w-100">
+                <thead>
                     <tr>
-                        <td><%= Appren.id %></td>
-                        <td><%= Appren.email %></td>
-                        <td><%= Appren.date_de_naissance %></td>
-                        <td><%= Appren.date_inscription %></td>
-                        <td><%= Appren.adresse %></td>
-                        <td><%= Appren.firstname %></td>
-                        <td><%= Appren.lastname %></td>
-                        <td><%= Appren.class_name %></td> 
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Date of Birth</th>
+                        <th>Registration Date</th>
+                        <th>Address</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Class</th>
                     </tr>
-                <% }); %>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <% if (Appren && Appren.length) { %>
+                        <% Appren.forEach(Appr => { %>
+                            <tr>
+                                <td><%= Appr.id %></td>
+                                <td><%= Appr.email %></td>
+                                <td><%= Appr.date_de_naissance %></td>
+                                <td><%= Appr.date_inscription %></td>
+                                <td><%= Appr.adresse %></td>
+                                <td><%= Appr.firstname %></td>
+                                <td><%= Appr.lastname %></td>
+                                <td><%= Appr.class_name %></td> 
+                            </tr>
+                        <% }); %>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+
     
 </main>
 
