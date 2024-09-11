@@ -1,53 +1,52 @@
 <%- include('../../layouts/navbar.ejs') %>
 
 <main class="container mt-5">
-    <h1 class="text-center">Students Table</h1>
+    <h1 class="text-center mb-4">Students Table</h1>
     
-    <div class="row">
-        <div class="col-md-12">
-            <button id="addStudentBtn" class="btn btnAddStudents btn-lg mt-3 px-5 float-right">Add Student</button>
+    <div class="row mb-3">
+        <div class="col-md-12 text-end">
+            <button id="addStudentBtn" class="btn btn-primary btn-lg mt-3 px-5">Add Student</button>
+            <input type="hidden" id="classeId" value="<%= classeId %>" />
+
         </div>
     </div>
     
-    
-        <div class="table-responsive tabels">
-            <table id="basic-datatable" class="table bg-white dt-responsive nowrap w-100">
-                <thead>
+    <div class="table-responsive shadow-sm rounded">
+        <table id="basic-datatable" class="table table-hover table-striped table-bordered bg-white dt-responsive nowrap w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Registration Date</th>
+                    <th>Address</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (etudiants.length > 0) { %>  
+                <% etudiants.forEach(function(student) { %>
                     <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Date of Birth</th>
-                        <th>Registration Date</th>
-                        <th>Address</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Class</th>
+                        <td><%= student.id %></td>
+                        <td><%= student.email %></td>
+                        <td><%= new Date(student.date_de_naissance).toLocaleDateString('en-GB') %></td>
+                        <td><%= new Date(student.date_inscription).toLocaleDateString('en-GB') %></td>
+                        <td><%= student.adresse %></td>
+                        <td><%= student.firstname %></td>
+                        <td><%= student.lastname %></td>
+                        <td><%= student.classe_name %></td> <!-- Display the class name -->
                     </tr>
-                </thead>
-                <tbody>
-                    {<% if (students.length > 0) { %>
-                        <% students.forEach(function(student) { %>
-                        <tr>
-                            <td><%= student.id %></td>
-                            <td><%= student.email %></td>
-                            <td><%= student.date_of_birth %></td>
-                            <td><%= student.registration_date %></td>
-                            <td><%= student.address %></td>
-                            <td><%= student.first_name %></td>
-                            <td><%= student.last_name %></td>
-                            <td><%= student.class_name %></td>
-                        </tr>
-                        <% }); %>
-                    <% } else { %>
-                        <tr>
-                            <td colspan="8">No students found</td>
-                        </tr>
-                    <% } %>
-                    
-                </tbody>
-            </table>
-        </div>
-
+                <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="8" class="text-center">No students found</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
     
 </main>
 

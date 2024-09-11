@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const classeId = '15';
     const addStudentBtn = document.getElementById('addStudentBtn');
     if (addStudentBtn) {
         addStudentBtn.addEventListener('click', function () {
@@ -42,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="col-12">
                                 <label for="adresse" class="form-label">Adresse</label>
                                 <input type="text" id="adresse" name="adresse" class="form-control" placeholder="Enter address">
-                                <input type="text" hidden value="${classeId}" name="classe_id" class="form-control">
                             </div>
                         </div>
+                        <input type="hidden" id="classeId" name="classeId" value="<%= classeId %>" />
                     </form>
                 `,
                 confirmButtonText: 'Ajouter',
@@ -62,22 +61,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     const date_de_naissance = document.getElementById('birthDate').value;
                     const date_inscription = document.getElementById('enrollDate').value;
                     const adresse = document.getElementById('adresse').value;
-                    const classe_id = document.querySelector('input[name="classe_id"]').value;
+                    const classeId = document.getElementById('classeId').value;
                     
-                    if (!firstname || !lastname || !email || !password || !date_de_naissance || !date_inscription || !adresse || !classe_id) {
+                    if (!firstname || !lastname || !email || !password || !date_de_naissance || !date_inscription || !adresse || !classeId) {
                         Swal.showValidationMessage('Please fill out all fields');
                         return false;
                     }
                 
                     return {
-                        firstname: firstname,
-                        lastname: lastname,
-                        email: email,
-                        password: password,
-                        date_de_naissance: date_de_naissance,
-                        date_inscription: date_inscription,
-                        adresse: adresse,
-                        classe_id: classe_id,
+                        firstname,
+                        lastname,
+                        email,
+                        password,
+                        date_de_naissance,
+                        date_inscription,
+                        adresse,
+                        classe_id: classeId
                     };
                 }
             }).then((result) => {
@@ -90,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            etudaints: [result.value]
+                            etudaints: [result.value],
+                            classe_id: result.value.classe_id
                         })
                     }).then(response => {
                         if (response.ok) {

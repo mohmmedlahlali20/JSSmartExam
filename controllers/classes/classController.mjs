@@ -2,7 +2,6 @@ import { createNewClass, alreadyHaveClasse } from '../../model/classe.mjs';
 
 export const showClasse = async (req, res) => {
     const formateurId = req.session.user.id;
-
     try {
         const hasClass = await alreadyHaveClasse(formateurId);
 
@@ -17,24 +16,17 @@ export const showClasse = async (req, res) => {
     }
 };
 
-export const createClass = async (req, res) => {
-    const { className } = req.body;
-    const formateurId = req.session.user.id;
 
-    if (!className || typeof className !== 'string') {
-        return res.status(400).send('Class name is required and must be a string');
-    }
+export const createClass = async (req, res) => {
+    const { className, formateurId } = req.body;
+
 
     try {
-        console.log('Creating class:', className, 'Formateur ID:', formateurId);
-
-        const result = await createNewClass(className, formateurId);
-        console.log('Class created successfully:', result);
-        res.status(200).json({ message: 'Class created successfully' }); // Respond with JSON
-
-    } catch (err) {
-        console.error('Error creating class:', err);
-        res.status(500).send('Error creating class');
+        await createNewClass(className, formateurId, db);
+        req.session.user.
+        res.status(201).json({ message: 'Class created successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };
 

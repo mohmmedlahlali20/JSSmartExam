@@ -32,3 +32,14 @@ export const createFormateur = async (user, db) => {
 export const comparePassword = async (enteredPassword, storedPassword) => {
     return bcrypt.compare(enteredPassword, storedPassword);
 };
+
+
+export const getClassByFormateurID = async (formateurId) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM Classe WHERE formateur_id = ?', [formateurId]);
+        return rows[0];
+    } catch (error) {
+        console.error('Error fetching class by formateur ID:', error);
+        throw error;
+    }
+};
