@@ -67,3 +67,7 @@
 .btnAddClass{
     float: right;
 }
+
+.hidden{
+    display: hidden;
+}

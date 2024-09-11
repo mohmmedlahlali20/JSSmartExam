@@ -25,20 +25,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (Appren && Appren.length) { %>
-                        <% Appren.forEach(Appr => { %>
-                            <tr>
-                                <td><%= Appr.id %></td>
-                                <td><%= Appr.email %></td>
-                                <td><%= Appr.date_de_naissance %></td>
-                                <td><%= Appr.date_inscription %></td>
-                                <td><%= Appr.adresse %></td>
-                                <td><%= Appr.firstname %></td>
-                                <td><%= Appr.lastname %></td>
-                                <td><%= Appr.class_name %></td> 
-                            </tr>
+                    {<% if (students.length > 0) { %>
+                        <% students.forEach(function(student) { %>
+                        <tr>
+                            <td><%= student.id %></td>
+                            <td><%= student.email %></td>
+                            <td><%= student.date_of_birth %></td>
+                            <td><%= student.registration_date %></td>
+                            <td><%= student.address %></td>
+                            <td><%= student.first_name %></td>
+                            <td><%= student.last_name %></td>
+                            <td><%= student.class_name %></td>
+                        </tr>
                         <% }); %>
-                        <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="8">No students found</td>
+                        </tr>
+                    <% } %>
+                    
                 </tbody>
             </table>
         </div>

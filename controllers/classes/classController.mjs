@@ -21,16 +21,21 @@ export const createClass = async (req, res) => {
     const { className } = req.body;
     const formateurId = req.session.user.id;
 
-    if (!className) {
-        return res.status(400).send('Class name is required');
+    if (!className || typeof className !== 'string') {
+        return res.status(400).send('Class name is required and must be a string');
     }
 
     try {
+        console.log('Creating class:', className, 'Formateur ID:', formateurId);
+
         const result = await createNewClass(className, formateurId);
         console.log('Class created successfully:', result);
-        res.redirect('/add_etudiant');
+        res.status(200).json({ message: 'Class created successfully' }); // Respond with JSON
+
     } catch (err) {
         console.error('Error creating class:', err);
         res.status(500).send('Error creating class');
     }
 };
+
+  

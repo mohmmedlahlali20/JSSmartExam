@@ -33,7 +33,7 @@ buttonAddClasse.addEventListener('click', function() {
                         icon: 'success'
                     }).then(() => {
                         setTimeout(() => {
-                            window.location.href = '/statique';
+                            window.location.href = '/statique'; // Redirect on success
                         }, 1000); 
                     });
                 } else {

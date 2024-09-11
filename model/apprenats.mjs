@@ -4,37 +4,44 @@ import db from '../config/db.config.mjs';
 const saltRounds = 10;
 
 export class Apprenants {
-    // Add students to the database
     static async addEtudiants(etudiants, classeId) {
         try {
             const sql = `
-                INSERT INTO Apprenants (firstname, lastname, email, password, date_de_naissance, date_inscription, adresse, classe_id)
-                VALUES (?,?,?,?,?,?,?,?)
+                INSERT INTO Apprenants (
+                    email, 
+                    password, 
+                    date_de_naissance, 
+                    date_inscription, 
+                    adresse, 
+                    classe_id, 
+                    firstname, 
+                    lastname
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
-
+    
             const queries = etudiants.map(async (etudiant) => {
                 const hashedPassword = await bcrypt.hash(etudiant.password, saltRounds);
                 return db.query(sql, [
-                    etudiant.firstname,
-                    etudiant.lastname,
                     etudiant.email,
                     hashedPassword,
                     etudiant.date_de_naissance,
                     etudiant.date_inscription,
                     etudiant.adresse,
-                    classeId
+                    classeId,
+                    etudiant.firstname,
+                    etudiant.lastname
                 ]);
             });
-
-            const results = await Promise.all(queries);
-            return results;
+            await Promise.all(queries);  // Assurez-vous que toutes les requêtes sont résolues
         } catch (error) {
-            console.error('Error inserting students:', error);
+            console.error('Error adding students:', error);
             throw error;
         }
     }
+    
+    
+    
 
-    // Fetch all students
     static async getAllApprenants() {
         try {
             const [rows] = await db.query('SELECT * FROM Apprenants');
@@ -45,7 +52,6 @@ export class Apprenants {
         }
     }
 
-    // Fetch a student by ID
     static async getApprenantById(id) {
         try {
             const [rows] = await db.query('SELECT * FROM Apprenants WHERE id = ?', [id]);
@@ -56,7 +62,6 @@ export class Apprenants {
         }
     }
 
-    // Update a student's details
     static async updateApprenant(id, updatedApprenant) {
         try {
             const hashedPassword = await bcrypt.hash(updatedApprenant.password, saltRounds);
@@ -77,7 +82,6 @@ export class Apprenants {
         }
     }
 
-    // Delete a student
     static async deleteApprenant(id) {
         try {
             const [rows] = await db.query('DELETE FROM Apprenants WHERE id = ?', [id]);
@@ -98,7 +102,6 @@ export class Apprenants {
         }
     }
 
-    // Fetch students by formateur
     static async getApprenantsByFormateur(formateurId) {
         try {
             const [rows] = await db.query('SELECT Apprenants.* FROM Apprenants INNER JOIN Classe ON Apprenants.classe_id = Classe.id WHERE Classe.formateur_id = ?', [formateurId]);

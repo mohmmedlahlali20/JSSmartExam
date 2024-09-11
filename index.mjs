@@ -1,13 +1,12 @@
 import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
-import crypto from 'crypto';
-import session from 'express-session';
 import { fileURLToPath } from 'url';
-import { createNewClass, alreadyHaveClasse } from './model/classe.mjs'; // Named imports
-import indexRouter from './routes/index.mjs'; // Import the router
+import { alreadyHaveClasse } from './model/classe.mjs';
+import session from 'express-session';
+// import crypto from 'crypto';
+import indexRouter from './routes/index.mjs';
 import db from './config/db.config.mjs';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -23,37 +22,43 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const secretKey = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
-
 app.use(session({
-  secret: secretKey,
+  secret: 'sessionOfJSSMARTEXAM',
   resave: false,
-  saveUninitialized: false,
-  cookie: { secure: true }  
+  saveUninitialized: true,
+  cookie: {
+
+    secure: false
+  }
+
 }));
 
-app.use((req, res, next) => {
-  req.db = db; 
-  next();
-});
-
 app.use(async (req, res, next) => {
-  console.log(req.session)
   try {
-    if (req.session && req.session.user) {
-      const formateurId = req.session.user.id;
-      const hasClass = await alreadyHaveClasse(req.db, formateurId);
+    const user = req.session?.user;
+    if (user) {
+      const hasClass = await alreadyHaveClasse(req.db, user.id);
+      console.log('User:', user.id, 'Has class:', hasClass); // Debugging
       res.locals.hasClass = hasClass;
-    } else {  
+    } else {
       res.locals.hasClass = false;
     }
-    res.locals.user = req.session && req.session.user ? req.session.user : null;
+    res.locals.user = user || null;
     next();
   } catch (err) {
     console.error('Error in middleware:', err);
     next(err);
   }
 });
+
+
+
+
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+
 
 app.use('/', indexRouter);
 

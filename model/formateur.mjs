@@ -1,16 +1,9 @@
 import bcrypt from 'bcryptjs';
+import db from '../config/db.config.mjs';
 
 export const getFormateurByEmail = async (email, db) => {
-    try {
-        const [results] = await db.query('SELECT * FROM Formateur WHERE email = ?', [email]);
-        if (results.length > 0) {
-            return results[0];
-        } else {
-            return null;
-        }
-    } catch (err) {
-        throw err;
-    }
+    const [rows] = await db.query('SELECT * FROM Formateur WHERE email = ?', [email]);
+    return rows[0];
 };
 
 
@@ -36,7 +29,6 @@ export const createFormateur = async (user, db) => {
     }
 };
 
-// Function to compare passwords
-export const comparePassword = (enteredPassword, storedPassword) => {
-    return bcrypt.compareSync(enteredPassword, storedPassword);
+export const comparePassword = async (enteredPassword, storedPassword) => {
+    return bcrypt.compare(enteredPassword, storedPassword);
 };

@@ -5,7 +5,6 @@ class EtudiantController {
         res.render('dashboardFormateur/classes/classFormateur', { title: "Add Student" });
     }
 
-    // Add students to the database
     static async addEtudiants(req, res) {
         const { etudaints } = req.body;
         const classeId = req.body.classe_id;
@@ -23,19 +22,21 @@ class EtudiantController {
         }
     }
 
-    // Fetch and render all students
-    static async getEtudiants(req, res) {
-        try {
-            const Appren = await Apprenants.getAllApprenants();
-            console.log('Fetched Appren:', Appren); 
-            res.render('dashboardFormateur/classes/classFormateur', { Appren });
-        } catch (error) {
-            console.error('Error fetching students:', error);
-            res.status(500).send('Server Error');
+
+        static async getEtudiants(req, res) {
+            // get all students 
+            try {
+                const etudiants = await Apprenants.getAllApprenants();
+                res.json(etudiants);
+            } catch (err) {
+                console.error('Error fetching students:', err);
+                res.status(500).send('Error fetching students.');
+            }
         }
+        
     }
 
 
-}
 
 export default EtudiantController;
+

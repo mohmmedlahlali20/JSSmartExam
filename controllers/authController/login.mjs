@@ -1,38 +1,38 @@
-
 import bcrypt from 'bcryptjs';
-
-import { getFormateurByEmail } from '../../model/formateur.mjs';
-
+import { getFormateurByEmail, comparePassword } from '../../model/formateur.mjs';
+import db from '../../config/db.config.mjs';
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await getFormateurByEmail(email, req.db);
+        console.log('Login request:', req.body);
 
-        if (!user || !bcrypt.compareSync(password, user.password)) {
-            return res.render("auth/login", { title: "Login Page", error: "Invalid email or password" });
+        const formateur = await getFormateurByEmail(email, db);
+        // console.log('Formateur fetched:', formateur);  //done
+
+        if (!formateur) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        req.session.user = {
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            specialite: user.specialite,
-        };
+        const isMatch = await comparePassword(password, formateur.password);
+        //console.log('Password match result:', isMatch); // return true
 
-        req.session.save((err) => {
-            if (err) {
-                console.error('Error saving session:', err);
-                return res.render("auth/login", { title: "Login Page", error: "Session error occurred" });
-            }
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid password' });
+        }
 
-            res.redirect('/statique');
-        });
         
+        //console.log('Setting session:', formateur);
+        req.session.user = formateur;
+
+        
+        // console.log('Session after setting user:', req.session);
+
+        res.redirect('/statique');
+
     } catch (err) {
         console.error('Login error:', err);
-        res.render("auth/login", { title: "Login Page", error: "An error occurred during login" });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
