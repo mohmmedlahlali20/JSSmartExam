@@ -3,14 +3,14 @@ import { home } from '../controllers/homeController.mjs';
 import { statique } from '../controllers/indexController.mjs';
 import { login, logout } from '../controllers/authController/login.mjs';
 import { getRegisterPage, register } from '../controllers/authController/register.mjs';
-import studentsController from '../controllers/formateur/students.mjs'; // Check this import
+import studentsController from '../controllers/formateur/students.mjs';
 import { showClasse, createClass } from '../controllers/classes/classController.mjs';
 
 const router = express.Router();
 const app = express();
 
 function isAuthenticated(req, res, next) {
-    console.log('Session:', req.session.user);
+    // console.log('Session:', req.session.user);
   
     if (req.session.user) {
         req.user = req.session.user;
@@ -19,17 +19,6 @@ function isAuthenticated(req, res, next) {
     res.redirect('/login');
 }
 
-// console.log(home);
-// console.log(statique);
-// console.log(login);
-// console.log(logout);
-// console.log(getRegisterPage);
-// console.log(register);
-// console.log(studentsController);
-// console.log(studentsController.etudaints);
-// console.log(studentsController.addEtudiants);
-// console.log(showClasse);
-// console.log(createClass);
 
 router.get('/', home);
 router.get('/statique', isAuthenticated, statique);
@@ -42,12 +31,11 @@ router.get('/logout', logout);
 
 router.get('/Add-classe', isAuthenticated, showClasse);
 router.post('/create-class', isAuthenticated, createClass);
-// router.post('/add_etudiant', studentsController.addEtudiants);
-
 router.route('/add_etudiant')
     .get(studentsController.etudaints)  
-    .post(studentsController.addEtudiants);
+    .post(studentsController.addEtudiants)
+    router.post('/add_etudiant/:id', isAuthenticated, studentsController.updateStudent);
 
-app.use('/', router);
+app.use('/', router); 
 
 export default app;

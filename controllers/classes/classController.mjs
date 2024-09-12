@@ -17,16 +17,25 @@ export const showClasse = async (req, res) => {
 };
 
 
-export const createClass = async (req, res) => {
-    const { className, formateurId } = req.body;
 
+
+export const createClass = async (req, res) => {
+    const { className } = req.body;
+    const formateurId = req.session.user.id; 
+
+    console.log('Request body:', req.body);
+    console.log('Formateur ID from session:', formateurId);
+
+    if (!className || !formateurId) {
+        return res.status(400).json({ message: 'Class name and formateur ID are required.' });
+    }
 
     try {
-        await createNewClass(className, formateurId, db);
-        req.session.user.
-        res.status(201).json({ message: 'Class created successfully' });
+        await createNewClass(className, formateurId);
+        res.status(201).json({ success: true, message: 'Class created successfully' });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Error creating class:', error);
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 

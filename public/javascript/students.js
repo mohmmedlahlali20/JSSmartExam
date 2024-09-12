@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const addStudentBtn = document.getElementById('addStudentBtn');
-    if (addStudentBtn) {
-        addStudentBtn.addEventListener('click', function () {
-            console.log('Button clicked');
+    const putona = document.getElementById('putona');
+    console.log(putona)
+    if (putona) {
+        putona.addEventListener('click', function () {
             Swal.fire({
                 title: 'Ajouter un étudiant',
                 html: `
@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <input type="text" id="adresse" name="adresse" class="form-control" placeholder="Enter address">
                             </div>
                         </div>
-                        <input type="hidden" id="classeId" name="classeId" value="<%= classeId %>" />
                     </form>
                 `,
                 confirmButtonText: 'Ajouter',
@@ -54,20 +53,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     confirmButton: 'confirm-button-class'
                 },
                 preConfirm: () => {
-                    const firstname = document.getElementById('firstName').value;
-                    const lastname = document.getElementById('lastName').value;
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
+                    const firstname = document.getElementById('firstName').value.trim();
+                    const lastname = document.getElementById('lastName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value.trim();
                     const date_de_naissance = document.getElementById('birthDate').value;
                     const date_inscription = document.getElementById('enrollDate').value;
-                    const adresse = document.getElementById('adresse').value;
-                    const classeId = document.getElementById('classeId').value;
-                    
+                    const adresse = document.getElementById('adresse').value.trim();
+                    const classeId = document.getElementById('classeId').value.trim();
+
+                    // Corrected console.log placement
+                    console.log('First name:', firstname, 'Address:', adresse);
+
                     if (!firstname || !lastname || !email || !password || !date_de_naissance || !date_inscription || !adresse || !classeId) {
                         Swal.showValidationMessage('Please fill out all fields');
                         return false;
                     }
-                
+
                     return {
                         firstname,
                         lastname,
@@ -80,9 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     };
                 }
             }).then((result) => {
+                console.log(result)
                 if (result.isConfirmed) {
                     console.log('Student data:', result.value);
-    
+
                     fetch('/add_etudiant', {
                         method: 'POST',
                         headers: {
@@ -92,13 +95,18 @@ document.addEventListener('DOMContentLoaded', function() {
                             etudaints: [result.value],
                             classe_id: result.value.classe_id
                         })
-                    }).then(response => {
-                        if (response.ok) {
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Response data:', data);
+                        if (data.success) {
                             Swal.fire('Success', 'Student added successfully!', 'success');
                         } else {
                             Swal.fire('Error', 'Failed to add student.', 'error');
                         }
-                    }).catch(error => {
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error); 
                         Swal.fire('Error', 'An unexpected error occurred.', 'error');
                     });
                 }

@@ -22,27 +22,21 @@
                     Dashboard
                 </a>
             </li>
-            <li class="nav-item <%= hasClass ? 'hidden' : '' %>">
-                <a class="nav-link" href="/Add-classe">
-                    Add new class
-                </a>
-            </li>
-            <li class="nav-item <%= !hasClass ? 'hidden' : '' %>">
-                <a class="nav-link" href="/add_etudiant">
-                    Add new student
-                </a>
-            </li>
-            
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Products
-                </a>
+                <% if (!hasClass) { %>
+                    <a class="nav-link" href="/Add-classe">
+                        Gestion du class
+                    </a>
+                <% } %>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Customers
-                </a>
+                <% if (hasClass) { %>
+                    <a class="nav-link" href="/add_etudiant">
+                      Gestion des students
+                    </a>
+                <% } %>
             </li>
+
         </ul>
     </div>
     <div class="user-info">

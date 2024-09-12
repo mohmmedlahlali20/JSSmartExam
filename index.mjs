@@ -37,8 +37,8 @@ app.use(async (req, res, next) => {
   try {
     const user = req.session?.user;
     if (user) {
-      const hasClass = await alreadyHaveClasse(req.db, user.id);
-      console.log('User:', user.id, 'Has class:', hasClass); // Debugging
+      const hasClass = await alreadyHaveClasse(user.id); 
+      console.log('User:', user.id, 'Has class:', hasClass);
       res.locals.hasClass = hasClass;
     } else {
       res.locals.hasClass = false;
@@ -50,6 +50,7 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
+
 
 
 

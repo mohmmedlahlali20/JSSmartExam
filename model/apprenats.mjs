@@ -3,7 +3,8 @@ import db from '../config/db.config.mjs';
 
 const saltRounds = 10;
 
-export class Apprenants {static async addEtudiants(etudiants) {
+export class Apprenants {
+    static async addEtudiants(etudiants) {
     try {
         const sql = `
             INSERT INTO Apprenants (
@@ -17,7 +18,7 @@ export class Apprenants {static async addEtudiants(etudiants) {
                 lastname
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `;
-        
+     
         const queries = etudiants.map(async (etudiant) => {
             const hashedPassword = await bcrypt.hash(etudiant.password, saltRounds);
 
@@ -30,10 +31,22 @@ export class Apprenants {static async addEtudiants(etudiants) {
                 etudiant.adresse,
                 etudiant.classe_id, 
                 etudiant.firstname,
-                etudiant.lastname
+                etudiant.lastname,
+
+                console.log('Inserting student:', {
+                    email: etudiant.email,
+                    password: hashedPassword,
+                    date_de_naissance: etudiant.date_de_naissance,
+                    date_inscription: etudiant.date_inscription,
+                    adresse: etudiant.adresse, // Log the address value
+                    classe_id: etudiant.classe_id,
+                    firstname: etudiant.firstname,
+                    lastname: etudiant.lastname
+                })
             ]);
         });
 
+        
         await Promise.all(queries); 
     } catch (error) {
         console.error('Error adding students:', error);
@@ -41,7 +54,33 @@ export class Apprenants {static async addEtudiants(etudiants) {
     }
 }
 
-    static async getAllApprenants(classeId) {
+
+
+static async updateApprenant (id, updatedData) {
+    const { firstname, lastname, email, password, date_de_naissance, date_inscription, adresse } = updatedData;
+    try {
+        const hashedPassword = password ? await bcrypt.hash(password, saltRounds) : null;
+
+        const [result] = await db.query(
+            'UPDATE Apprenants SET firstname = ?, lastname = ?, email = ?, password = IFNULL(?, password), date_de_naissance = ?, date_inscription = ?, adresse = ? WHERE id = ?',
+            [firstname, lastname, email, hashedPassword, date_de_naissance, date_inscription, adresse, id]
+        );
+        return result;
+    } catch (error) {
+        throw new Error('Error updating apprenant: ' + error.message);
+    }
+};
+    static async deleteApprenant(id) {
+        try {
+            const [result] = await db.query('DELETE FROM Apprenants WHERE id = ?', [id]);
+            return result;
+        } catch (error) {
+            console.error('Error deleting Apprenant:', error);
+            throw error;
+        }
+    }
+
+         static async getAllApprenants(classeId) {
         try {
             const query = `
                 SELECT a.id, a.email, a.date_de_naissance, a.date_inscription, a.adresse, a.firstname, a.lastname, c.name as classe_name 
@@ -53,45 +92,6 @@ export class Apprenants {static async addEtudiants(etudiants) {
             return rows;
         } catch (error) {
             console.error('Database query error:', error);
-            throw error;
-        }
-    }
-    static async getApprenantById(id) {
-        try {
-            const [rows] = await db.query('SELECT * FROM Apprenants WHERE id = ?', [id]);
-            return rows[0];
-        } catch (error) {
-            console.error('Error fetching Apprenant:', error);
-            throw error;
-        }
-    }
-
-    static async updateApprenant(id, updatedApprenant) {
-        try {
-            const hashedPassword = await bcrypt.hash(updatedApprenant.password, saltRounds);
-            const [result] = await db.query('UPDATE Apprenants SET firstname = ?, lastname = ?, email = ?, password = ?, date_de_naissance = ?, date_inscription = ?, adresse = ? WHERE id = ?', [
-                updatedApprenant.firstname,
-                updatedApprenant.lastname,
-                updatedApprenant.email,
-                hashedPassword,
-                updatedApprenant.date_de_naissance,
-                updatedApprenant.date_inscription,
-                updatedApprenant.adresse,
-                id
-            ]);
-            return result;
-        } catch (error) {
-            console.error('Error updating Apprenant:', error);
-            throw error;
-        }
-    }
-
-    static async deleteApprenant(id) {
-        try {
-            const [result] = await db.query('DELETE FROM Apprenants WHERE id = ?', [id]);
-            return result;
-        } catch (error) {
-            console.error('Error deleting Apprenant:', error);
             throw error;
         }
     }
@@ -113,6 +113,16 @@ export class Apprenants {static async addEtudiants(etudiants) {
     //         return rows;
     //     } catch (error) {
     //         console.error('Error fetching Apprenants by Formateur:', error);
+    //         throw error;
+    //     }
+    // }
+   
+    // static async getApprenantById(id) {
+    //     try {
+    //         const [rows] = await db.query('SELECT * FROM Apprenants WHERE id = ?', [id]);
+    //         return rows[0];
+    //     } catch (error) {
+    //         console.error('Error fetching Apprenant:', error);
     //         throw error;
     //     }
     // }

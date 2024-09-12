@@ -25,21 +25,22 @@ buttonAddClasse.addEventListener('click', function() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ className: className })
-            }).then(response => {
-                if (response.ok) {
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     Swal.fire({
                         title: 'Success!',
                         text: `Class "${className}" has been created!`,
                         icon: 'success'
                     }).then(() => {
                         setTimeout(() => {
-                            window.location.href = '/statique'; // Redirect on success
+                            window.location.href = '/statique'; 
                         }, 1000); 
                     });
                 } else {
                     Swal.fire({
                         title: 'Error!',
-                        text: 'Failed to create class.',
+                        text: data.message || 'Failed to create class.',
                         icon: 'error'
                     });
                 }

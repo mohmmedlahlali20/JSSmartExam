@@ -8,11 +8,11 @@ export const login = async (req, res) => {
         console.log('Login request:', req.body);
         const formateur = await getFormateurByEmail(email, db);
         if (!formateur) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.redirect('/login');
         }
         const isMatch = await comparePassword(password, formateur.password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid password' });
+            return res.redirect('/login');
         }
         req.session.user = formateur;
         res.redirect('/statique');

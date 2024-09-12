@@ -1,5 +1,4 @@
 import { Apprenants } from '../../model/apprenats.mjs'; 
-// import { getFormateurIdByClassId } from '../../model/classe.mjs';
 import {getClassByFormateurID} from '../../model/formateur.mjs'
 
 class EtudiantController {
@@ -18,8 +17,8 @@ class EtudiantController {
 
             const classeId = classe.id;
             const etudiants = await Apprenants.getAllApprenants(classeId);
-            console.log('Class ID:', classeId);
-            console.log('Students:', etudiants);
+            // console.log('Class ID:', classeId);
+            // console.log('Students:', etudiants);
 
             res.render('dashboardFormateur/classes/classFormateur', {
                 title: "Add Student",
@@ -30,7 +29,27 @@ class EtudiantController {
             console.error('Error fetching students:', err);
             res.status(500).send('Error fetching students.');
         }
-    }    static async addEtudiants(req, res) {
+
+
+    }
+
+
+    static async updateStudent (req, res) {
+        const studentId = req.params.id;
+        const updatedData = req.body;
+
+        // console.log('students update' , studentId, updatedData);
+    
+        try {
+            await Apprenants.updateApprenant(studentId, updatedData);
+            res.status(200).json({ message: 'Student updated successfully' });
+        } catch (error) {
+            console.error('Error updating student:', error);
+            res.status(500).json({ message: 'Failed to update student' });
+        }
+    };
+    
+    static async addEtudiants(req, res) {
         const { etudaints } = req.body;
 
         if (!req.session || !req.session.user) {
