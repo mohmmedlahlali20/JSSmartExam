@@ -1,5 +1,5 @@
 import { Apprenants } from '../../model/apprenats.mjs';
-import { getClassByFormateurID } from '../../model/formateur.mjs'
+import { Formateur } from '../../model/formateur.mjs'
 import { Email } from '../../model/emailService.mjs';
 class EtudiantController {
     static async etudaints(req, res) {
@@ -9,7 +9,7 @@ class EtudiantController {
             }
 
             const formateurId = req.session.user.id;
-            const classe = await getClassByFormateurID(formateurId);
+            const classe = await Formateur.getClassByFormateurID(formateurId);
 
             if (!classe) {
                 return res.status(404).send('Class not found');

@@ -1,4 +1,4 @@
-import { getFormateurByEmail, createFormateur } from '../../model/formateur.mjs';
+import { Formateur} from '../../model/formateur.mjs';
 import bcrypt from 'bcryptjs';
 
 export const getRegisterPage = (req, res) => {
@@ -17,14 +17,14 @@ export const register = async (req, res) => {
     }
 
     try {
-        const existingUser = await getFormateurByEmail(email, req.db);
+        const existingUser = await Formateur.getFormateurByEmail(email, req.db);
         if (existingUser) {
             return res.render('auth/register', { title: 'Register', error: 'Email already exists' });
         }
 
         const hashedPassword = bcrypt.hashSync(password, 10);
 
-        await createFormateur({
+        await Formateur.createFormateur({
             firstName,
             lastName,
             date_de_naissance,

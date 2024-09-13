@@ -2,9 +2,11 @@ import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
-import { alreadyHaveClasse } from './model/classe.mjs';
+import { Classe } from './model/classe.mjs';
 import session from 'express-session';
 import indexRouter from './routes/index.mjs';
+
+
 import studnetsRouter from './routes/studentsRouter.mjs';
 import db from './config/db.config.mjs';
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +40,7 @@ app.use(async (req, res, next) => {
   try {
     const user = req.session?.user;
     if (user) {
-      const hasClass = await alreadyHaveClasse(user.id); 
+      const hasClass = await Classe.alreadyHaveClasse(user.id); 
       console.log('User:', user.id, 'Has class:', hasClass);
       res.locals.hasClass = hasClass;
     } else {
@@ -63,7 +65,7 @@ app.use((req, res, next) => {
 
 
 app.use('/', indexRouter);
-app.use('/students', studnetsRouter);
+app.use('/Studnets', studnetsRouter);
 
 
 app.listen(PORT, () => {
