@@ -5,19 +5,12 @@ import { login, logout } from '../controllers/authController/login.mjs';
 import { getRegisterPage, register } from '../controllers/authController/register.mjs';
 import studentsController from '../controllers/formateur/students.mjs';
 import { showClasse, createClass } from '../controllers/classes/classController.mjs';
-
+import {isAuthenticated} from '../middleware/authMiddleware.mjs'
 const router = express.Router();
 const app = express();
 
-function isAuthenticated(req, res, next) {
-    // console.log('Session:', req.session.user);
-  
-    if (req.session.user) {
-        req.user = req.session.user;
-        return next();
-    }
-    res.redirect('/login');
-}
+
+
 
 
 router.get('/', home);
@@ -35,7 +28,7 @@ router.route('/add_etudiant')
     .get(studentsController.etudaints)  
     .post(studentsController.addEtudiants)
     router.post('/add_etudiant/:id', isAuthenticated, studentsController.updateStudent);
-
+    router.delete('/delete_student/:id',isAuthenticated, studentsController.deleteStudent);
 app.use('/', router); 
 
 export default app;

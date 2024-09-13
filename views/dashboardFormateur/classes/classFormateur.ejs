@@ -1,7 +1,6 @@
 <%- include('../../layouts/navbar.ejs') %>
-
 <main class="container mt-5">
-    <h1 class="text-center mb-4">Students Table</h1>
+    <h1 class="text-center mb-4">classe : <%= etudiants.classe_name %></h1>
     
     <div class="row mb-3">
         <div class="col-md-12 text-end">
@@ -9,7 +8,7 @@
             <input type="hidden" id="classeId" value="<%= classeId %>" />
         </div>
     </div>
-    
+
     <div class="table-responsive shadow-sm rounded">
         <table id="basic-datatable" class="table table-hover table-striped table-bordered bg-white dt-responsive nowrap w-100">
             <thead class="table-dark">
@@ -26,23 +25,23 @@
                 </tr>
             </thead>
             <tbody>
-                <% if (etudiants.length > 0) { %>  
-                <% etudiants.forEach(function(student) { %>
-                    <tr>
-                        <td><%= student.id %></td>
-                        <td><%= student.email %></td>
-                        <td><%= new Date(student.date_de_naissance).toLocaleDateString('en-GB') %></td>
-                        <td><%= new Date(student.date_inscription).toLocaleDateString('en-GB') %></td>
-                        <td><%= student.adresse %></td>
-                        <td><%= student.firstname %></td>
-                        <td><%= student.lastname %></td>
-                        <td><%= student.classe_name %></td>
-                        <td>
-                            <button class="btn btn-danger btn-sm deleteStudentBtn" data-id="<%= student.id %>">Delete</button>
-                            <button class="btn btn-primary btn-sm editStudentBtn" data-student='<%= JSON.stringify(student) %>'>Edit</button>
-                        </td>
-                    </tr>
-                <% }); %>
+                <% if (etudiants.length > 0) { %>
+                    <% etudiants.forEach(function(student) { %>
+                        <tr>
+                            <td><%= student.id %></td>
+                            <td><%= student.email %></td>
+                            <td><%= new Date(student.date_de_naissance).toLocaleDateString('en-GB') %></td>
+                            <td><%= new Date(student.date_inscription).toLocaleDateString('en-GB') %></td>
+                            <td><%= student.adresse %></td>
+                            <td><%= student.firstname %></td>
+                            <td><%= student.lastname %></td>
+                            <td><%= student.classe_name %></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm deleteStudentBtn" data-id="<%= student.id %>">Delete</button>
+                                <button class="btn btn-primary btn-sm editStudentBtn" data-student='<%= JSON.stringify(student) %>'>Edit</button>
+                            </td>
+                        </tr>
+                    <% }); %>
                 <% } else { %>
                     <tr>
                         <td colspan="9" class="text-center">No students found</td>
@@ -52,8 +51,53 @@
         </table>
     </div>
 
-
-
+    <div id="addStudentModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addStudentForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                                                    </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthDate" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="birthDate" name="date_de_naissance">
+                        </div>
+                        <div class="mb-3">
+                            <label for="enrollDate" class="form-label">Date of Enrollment</label>
+                            <input type="date" class="form-control" id="enrollDate" name="date_inscription">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <input type="hidden" id="classeId" name="classe_id" value="<%= classeId %>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="editStudentModal" tabindex="-1" role="dialog" aria-labelledby="editStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -68,43 +112,36 @@
                     <div class="modal-body">
                         <input type="hidden" id="studentId" name="id">
                         
-                        <!-- First Name -->
                         <div class="form-group">
                             <label for="firstname">First Name</label>
-                            <input type="text" class="form-control" id="firstname" name="firstname" required>
+                            <input type="text" class="form-control" id="firstname" name="firstname" >
                         </div>
                         
-                        <!-- Last Name -->
                         <div class="form-group">
                             <label for="lastname">Last Name</label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" required>
+                            <input type="text" class="form-control" id="lastname" name="lastname" >
                         </div>
                         
-                        <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" >
                         </div>
                         
-                        <!-- Date of Birth -->
                         <div class="form-group">
                             <label for="date_de_naissance">Date of Birth</label>
-                            <input type="date" class="form-control" id="date_de_naissance" name="date_de_naissance" required>
+                            <input type="date" class="form-control" id="date_de_naissance" name="date_de_naissance" >
                         </div>
                         
-                        <!-- Registration Date -->
                         <div class="form-group">
                             <label for="date_inscription">Registration Date</label>
-                            <input type="date" class="form-control" id="date_inscription" name="date_inscription" required>
+                            <input type="date" class="form-control" id="date_inscription" name="date_inscription" >
                         </div>
                         
-                        <!-- Address -->
                         <div class="form-group">
                             <label for="adresse">Address</label>
-                            <input type="text" class="form-control" id="adresse" name="adresse" required>
+                            <input type="text" class="form-control" id="adresse" name="adresse" >
                         </div>
     
-                        <!-- New Password (Optional) -->
                         <div class="form-group">
                             <label for="password">New Password (Leave blank to keep current)</label>
                             <input type="password" class="form-control" id="password" name="password">

@@ -1,74 +1,86 @@
 <%- include('layouts/header') %>
-<section>
+
+<section class=" py-5">
     <div class="container">
-
-        <div class="text-center m-3 p-3">
-            <h1 class="display-4">JSSmartExam</h1>
+        <div class="text-center my-5">
+            <h1 class="display-4 fw-bold">JSSmartExam</h1>
             <p class="lead">Welcome to the platform where you can create, manage, and take online exams.</p>
-        </div>
-
-        <div class="row mt-5">
-
-            <div class="col-lg-6 Formateur col-md-6 col-sm-12">
-                <div class="card Formateur shadow-lg border-0">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Formateur Dashboard</h5>
-                        <p class="card-text">Manage your courses, exams, and students efficiently.</p>
-                        <a href="/register" class="btn btn-primary btn-lg mt-3 px-5" style="border-radius: 25px;">
-                            Go to Dashboard
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6  col-md-6 col-sm-12">
-                <div class="card Student shadow-lg border-0">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Student Dashboard</h5>
-                        <p class="card-text">Access your courses, take exams, and track your progress.</p>
-                        <a href="/login" class="btn btn-success btn-lg mt-3 px-5" style="border-radius: 25px;">
-                            Go to Dashboard
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <h2 class="text-center mt-5">Why JSSmartExam?</h2>
-        <div class="row mt-3  section">
-            <div class="col-lg-4 col-md-6 sectionChild col-sm-12">
-                <div class="card ">
-                    <div class="card-body text-center">
-                        <i class="fas fa-graduation-cap fa-5x text-primary"></i>
-                        <h5 class="card-title">Efficient Learning</h5>
-                        <p class="card-text">Organize your courses, manage exams, and track your progress.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 sectionChild col-sm-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-lock fa-5x text-primary"></i>
-                        <h5 class="card-title">Secure and Private</h5>
-                        <p class="card-text">Access your courses, take exams, and track your progress securely.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6  sectionChild col-sm-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-users fa-5x text-primary"></i>
-                        <h5 class="card-title">Join and Collaborate</h5>
-                        <p class="card-text">Join other students and work together to create high-quality courses.</p>
-                    </div>
-                </div>
-            </div>
-
-       
+            <a href="#features" class="btn btn-primary btn-lg mt-3 px-5" style="border-radius: 25px;">Explore Features</a>
         </div>
     </div>
-    
 </section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-5 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-body text-center">
+                        <img src="/images/formateur.jpeg" alt="Formateur" class="img-fluid mb-3 rounded-circle mx-auto d-block" style="width: 150px; height: 150px; object-fit: cover;">
+                        <h5 class="card-title">Formateur Dashboard</h5>
+                        <p class="card-text">Manage your courses, exams, and students efficiently.</p>
+                        <a href="/register" class="btn btn-primary btn-lg mt-3 px-5 btn-animate" style="border-radius: 25px;">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-body text-center">
+                        <img src="/images/students.jpeg" alt="Student" class="img-fluid mb-3 rounded-circle mx-auto d-block" style="width: 150px; height: 150px; object-fit: cover;">
+                        <h5 class="card-title">Student Dashboard</h5>
+                        <p class="card-text">Access your courses, take exams, and track your progress.</p>
+                        <a href="/login" class="btn btn-success btn-lg mt-3 px-5 btn-animate" style="border-radius: 25px;">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class=" py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold mt-5">Why JSSmartExam?</h2>
+        <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-sm border-0 h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-graduation-cap fa-5x text-primary mb-3"></i>
+                        <h5 class="card-title">Efficient Learning</h5>
+                        <p class="card-text">Organize your courses, manage exams, and track your progress with ease.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-sm border-0 h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-lock fa-5x text-primary mb-3"></i>
+                        <h5 class="card-title">Secure and Private</h5>
+                        <p class="card-text">Your data is safe, and your progress is only accessible to you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card shadow-sm border-0 h-100 text-center">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-5x text-primary mb-3"></i>
+                        <h5 class="card-title">Join and Collaborate</h5>
+                        <p class="card-text">Work with other students and instructors to create and take exams together.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <p class="mb-0">© 2024 JSSmartExam. All rights reserved.</p>
+        <small>Developed with ❤️ using Bootstrap.</small>
+    </div>
+</section>
+
 <%- include('layouts/script') %>
+

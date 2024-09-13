@@ -1,58 +1,63 @@
 import bcrypt from 'bcryptjs';
+
 import db from '../config/db.config.mjs';
 
 const saltRounds = 10;
 
 export class Apprenants {
-    static async addEtudiants(etudiants) {
-    try {
-        const sql = `
-            INSERT INTO Apprenants (
-                email, 
-                password, 
-                date_de_naissance, 
-                date_inscription, 
-                adresse, 
-                classe_id, 
-                firstname, 
-                lastname
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `;
-     
-        const queries = etudiants.map(async (etudiant) => {
-            const hashedPassword = await bcrypt.hash(etudiant.password, saltRounds);
 
-            
-            return db.query(sql, [
-                etudiant.email,
-                hashedPassword,
-                etudiant.date_de_naissance,
-                etudiant.date_inscription,
-                etudiant.adresse,
-                etudiant.classe_id, 
-                etudiant.firstname,
-                etudiant.lastname,
 
-                console.log('Inserting student:', {
-                    email: etudiant.email,
-                    password: hashedPassword,
-                    date_de_naissance: etudiant.date_de_naissance,
-                    date_inscription: etudiant.date_inscription,
-                    adresse: etudiant.adresse, // Log the address value
-                    classe_id: etudiant.classe_id,
-                    firstname: etudiant.firstname,
-                    lastname: etudiant.lastname
-                })
-            ]);
-        });
+    static async getStudentByEmail(email) {
+        try {
+            const [rows] = await db.query('SELECT * FROM Apprenants WHERE email = ?', [email]);
 
-        
-        await Promise.all(queries); 
-    } catch (error) {
-        console.error('Error adding students:', error);
-        throw error;
+            if (rows.length === 0) {
+                return null; 
+            }
+
+            return rows[0]; 
+        } catch (err) {
+            console.error('Error fetching student by email:', err);
+            throw err;
+        }
     }
-}
+    static async addEtudiants(etudiants) {
+        try {
+            const sql = `
+                INSERT INTO Apprenants (
+                    email, 
+                    password, 
+                    date_de_naissance, 
+                    date_inscription, 
+                    adresse, 
+                    classe_id, 
+                    firstname, 
+                    lastname
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+         
+            const queries = etudiants.map(async (etudiant) => {
+                const hashedPassword = await bcrypt.hash(etudiant.password, saltRounds);
+    
+                return db.query(sql, [
+                    etudiant.email,
+                    hashedPassword,
+                    etudiant.date_de_naissance,
+                    etudiant.date_inscription,
+                    etudiant.address,
+                    etudiant.classe_id, 
+                    etudiant.firstname,
+                    etudiant.lastname
+                ]);
+            });
+    
+            await Promise.all(queries); 
+        } catch (error) {
+            console.error('Error adding students:', error);
+            throw error;
+        }
+    }
+    
 
 
 
@@ -70,15 +75,16 @@ static async updateApprenant (id, updatedData) {
         throw new Error('Error updating apprenant: ' + error.message);
     }
 };
-    static async deleteApprenant(id) {
-        try {
-            const [result] = await db.query('DELETE FROM Apprenants WHERE id = ?', [id]);
-            return result;
-        } catch (error) {
-            console.error('Error deleting Apprenant:', error);
-            throw error;
-        }
+static async deleteApprenant(id) {
+    try {
+        const [result] = await db.query('DELETE FROM Apprenants WHERE id = ?', [id]);
+        return result;
+    } catch (error) {
+        console.error('Error deleting Apprenant:', error);
+        throw error;
     }
+}
+
 
          static async getAllApprenants(classeId) {
         try {

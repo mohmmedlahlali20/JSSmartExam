@@ -6,6 +6,7 @@ import { alreadyHaveClasse } from './model/classe.mjs';
 import session from 'express-session';
 // import crypto from 'crypto';
 import indexRouter from './routes/index.mjs';
+import studnetsRouter from './routes/studentsRouter.mjs';
 import db from './config/db.config.mjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +63,8 @@ app.use((req, res, next) => {
 
 
 app.use('/', indexRouter);
+app.use('/students', studnetsRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

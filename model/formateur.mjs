@@ -7,6 +7,9 @@ export const getFormateurByEmail = async (email, db) => {
 };
 
 
+
+
+
 export const createFormateur = async (user, db) => {
     try {
         const sql = `
