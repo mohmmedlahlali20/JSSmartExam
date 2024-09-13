@@ -1,10 +1,10 @@
 <%- include('../../layouts/navbar.ejs') %>
-<main class="main-content">
-  <div class="container-test">
-    <h1 class="page-title">Liste des Tests</h1>
+<main class="imane-main-content">
+  <div class="imane-container-test">
+    <h1 class="imane-page-title">Liste des Tests</h1>
 
-    <div class="table-container">
-      <table id="testsTable" class="data-table">
+    <div class="imane-table-container">
+      <table id="imane-tests-table" class="imane-data-table">
         <thead>
           <tr>
             <th>Score Validation</th>
@@ -18,7 +18,7 @@
             <td><%= tests[i].scoreValidation %></td>
             <td>
               <span
-                class="badge <%= tests[i].droitDeVue ? 'badge-green' : 'badge-red' %>"
+                class="imane-badge <%= tests[i].droitDeVue ? 'imane-badge-green' : 'imane-badge-red' %>"
               >
                 <%= tests[i].droitDeVue ? 'Oui' : 'Non' %>
               </span>
@@ -31,4 +31,4 @@
     </div>
   </div>
 </main>
-<%-include('../../layouts/script.ejs') %>
+<%- include('../../layouts/script.ejs') %>
