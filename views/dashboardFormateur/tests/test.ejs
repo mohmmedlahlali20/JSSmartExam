@@ -1,0 +1,34 @@
+<%- include('../../layouts/navbar.ejs') %>
+<main class="main-content">
+  <div class="container-test">
+    <h1 class="page-title">Liste des Tests</h1>
+
+    <div class="table-container">
+      <table id="testsTable" class="data-table">
+        <thead>
+          <tr>
+            <th>Score Validation</th>
+            <th>Droit de Vue</th>
+            <th>Total Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < tests.length; i++) { %>
+          <tr>
+            <td><%= tests[i].scoreValidation %></td>
+            <td>
+              <span
+                class="badge <%= tests[i].droitDeVue ? 'badge-green' : 'badge-red' %>"
+              >
+                <%= tests[i].droitDeVue ? 'Oui' : 'Non' %>
+              </span>
+            </td>
+            <td><%= tests[i].totalPoints %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<%-include('../../layouts/script.ejs') %>

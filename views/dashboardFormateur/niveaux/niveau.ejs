@@ -1,0 +1,162 @@
+<%- include('../../layouts/navbar.ejs') %>
+
+<main id="body-class">
+  <div class="niveau-container">
+    <div class="card-niveau">
+      <h1 class="niveau-header">Niveau Management</h1>
+
+      <h2 class="niveau-subheader">Add New Level</h2>
+      <form id="form-container" action="/create-niveau" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="niveau">Niveau:</label>
+          <input
+            class="form-input"
+            type="text"
+            id="niveau"
+            name="niveau"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="description">Description:</label>
+          <input
+            class="form-input"
+            type="text"
+            id="description"
+            name="description"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="max">Max:</label>
+          <input
+            class="form-input"
+            type="number"
+            id="max"
+            name="max"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="min">Min:</label>
+          <input
+            class="form-input"
+            type="number"
+            id="min"
+            name="min"
+            required
+          />
+        </div>
+        <button class="niveau-button" type="submit">Add New Level</button>
+      </form>
+    </div>
+
+    <div class="card-niveau">
+      <h2 class="niveau-subheader">Levels</h2>
+      <table id="table-container">
+        <thead>
+          <tr class="table-row">
+            <th class="table-header">ID</th>
+            <th class="table-header">Niveau</th>
+            <th class="table-header">Description</th>
+            <th class="table-header">Max</th>
+            <th class="table-header">Min</th>
+            <th class="table-header">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < niveaux.length; i++) { %>
+          <tr class="table-row">
+            <td class="table-cell"><%= niveaux[i].id %></td>
+            <td class="table-cell"><%= niveaux[i].niveau %></td>
+            <td class="table-cell"><%= niveaux[i].description %></td>
+            <td class="table-cell"><%= niveaux[i].max %></td>
+            <td class="table-cell"><%= niveaux[i].min %></td>
+            <td class="table-cell">
+              <div class="action-buttons">
+                <button
+                  class="button update-btn"
+                  type="button"
+                  onclick="openUpdateModal(
+                        '<%= niveaux[i].id %>',
+                        '<%= niveaux[i].niveau %>',
+                        '<%= niveaux[i].description %>',
+                        '<%= niveaux[i].max %>',
+                        '<%= niveaux[i].min %>'
+                      )"
+                >
+                  Edit
+                </button>
+                <form
+                  action="/delete-niveau/<%= niveaux[i].id %>"
+                  method="POST"
+                  class="inline-form"
+                >
+                  <button class="button delete-btn" type="submit">
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- Updated Modal Structure -->
+<div id="updateModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Edit Niveau</h2>
+      <button class="close">&times;</button>
+    </div>
+    <form id="updateForm" action="/update-niveau" method="POST">
+      <input type="hidden" id="updateId" name="id" />
+      <div class="form-group">
+        <label class="form-label" for="updateNiveau">Niveau:</label>
+        <input
+          class="form-input"
+          type="text"
+          id="updateNiveau"
+          name="niveau"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="updateDescription">Description:</label>
+        <input
+          class="form-input"
+          type="text"
+          id="updateDescription"
+          name="description"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="updateMax">Max:</label>
+        <input
+          class="form-input"
+          type="number"
+          id="updateMax"
+          name="max"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="updateMin">Min:</label>
+        <input
+          class="form-input"
+          type="number"
+          id="updateMin"
+          name="min"
+          required
+        />
+      </div>
+      <button type="submit" class="update-button">Update Level</button>
+    </form>
+  </div>
+</div>
+<%- include('../../layouts/script.ejs') %>
