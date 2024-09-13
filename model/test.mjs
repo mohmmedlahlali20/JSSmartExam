@@ -1,11 +1,11 @@
 import db from "../config/db.config.mjs";
 
-export const getTests = (callback) => {
+export const getTests = async () => {
   const sql = `SELECT * FROM Test`;
-  db.query(sql, (err, result) => {
-    if (err) {
-      return callback(err, null);
-    }
-    callback(null, result);
-  });
+  try {
+    const [result] = await db.query(sql); 
+    return result;
+  } catch (err) {
+    throw err; 
+  }
 };

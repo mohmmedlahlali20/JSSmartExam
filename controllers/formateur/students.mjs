@@ -1,6 +1,6 @@
-import { Apprenants } from '../../model/apprenats.mjs'; 
-import {getClassByFormateurID} from '../../model/formateur.mjs'
-
+import { Apprenants } from '../../model/apprenats.mjs';
+import { getClassByFormateurID } from '../../model/formateur.mjs'
+import { Email } from '../../model/emailService.mjs';
 class EtudiantController {
     static async etudaints(req, res) {
         try {
@@ -22,7 +22,7 @@ class EtudiantController {
             res.render('dashboardFormateur/classes/classFormateur', {
                 title: "Add Student",
                 etudiants: etudiants,
-                classeId: classeId,  
+                classeId: classeId,
             });
         } catch (err) {
             console.error('Error fetching students:', err);
@@ -31,10 +31,13 @@ class EtudiantController {
 
 
     }
+
+
     static async addEtudiants(req, res) {
         const { etudiants } = req.body;
     
-        console.log('Received data:', req.body); 
+        console.log('Received data:', req.body);
+    
         if (!req.session || !req.session.user) {
             return res.status(401).json({ message: 'User not authenticated' });
         }
@@ -46,14 +49,25 @@ class EtudiantController {
     
             await Apprenants.addEtudiants(etudiants);
     
-            res.status(201).json({ message: 'Student added successfully' });
+            for (const etudiant of etudiants) {
+                const name = `${etudiant.firstname} ${etudiant.lastname}`;
+                const email = etudiant.email;
+                const subject = 'Welcome to the Course!';
+                const htmlContent = Email.generateEmailContent(name, email, etudiant.password);
+    
+                await Email.sendEmail(email, subject, htmlContent);
+            }
+    
+            res.status(201).json({ message: 'Students added and emails sent successfully' });
         } catch (error) {
             console.error('Error adding students:', error);
             res.status(400).json({ message: error.message });
         }
     }
     
-    
+
+
+
     static async deleteStudent(req, res) {
         const { id } = req.params;
         try {
@@ -66,12 +80,12 @@ class EtudiantController {
     }
 
 
-    static async updateStudent (req, res) {
+    static async updateStudent(req, res) {
         const studentId = req.params.id;
         const updatedData = req.body;
 
         // console.log('students update' , studentId, updatedData);
-    
+
         try {
             await Apprenants.updateApprenant(studentId, updatedData);
             res.status(200).json({ message: 'Student updated successfully' });
@@ -80,8 +94,8 @@ class EtudiantController {
             res.status(500).json({ message: 'Failed to update student' });
         }
     };
-    
-    
+
+
 }
 
 
@@ -89,7 +103,7 @@ class EtudiantController {
 export default EtudiantController;
 
 
- 
+
 
 
 

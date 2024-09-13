@@ -22,6 +22,10 @@ export class Apprenants {
         }
     }
     static async addEtudiants(etudiants) {
+        if (!Array.isArray(etudiants)) {
+            throw new Error('The etudiants parameter should be an array');
+        }
+    
         try {
             const sql = `
                 INSERT INTO Apprenants (
@@ -35,7 +39,7 @@ export class Apprenants {
                     lastname
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
-         
+        
             const queries = etudiants.map(async (etudiant) => {
                 const hashedPassword = await bcrypt.hash(etudiant.password, saltRounds);
     
@@ -57,6 +61,7 @@ export class Apprenants {
             throw error;
         }
     }
+    
     
 
 
@@ -102,34 +107,9 @@ static async deleteApprenant(id) {
         }
     }
 
-    // static async getApprenantsByClasse(classeId) {
-    //     try {
-    //         const [rows] = await db.query('SELECT * FROM Apprenants WHERE classe_id = ?', [classeId]);
-    //         console.log(classeId)
-    //         return rows;
-    //     } catch (error) {
-    //         console.error('Error fetching Apprenants by Classe:', error);
-    //         throw error;
-    //     }
-    // }
-
-    // static async getApprenantsByFormateur(formateurId) {
-    //     try {
-    //         const [rows] = await db.query('SELECT Apprenants.* FROM Apprenants INNER JOIN Classe ON Apprenants.classe_id = Classe.id WHERE Classe.formateur_id = ?', [formateurId]);
-    //         return rows;
-    //     } catch (error) {
-    //         console.error('Error fetching Apprenants by Formateur:', error);
-    //         throw error;
-    //     }
-    // }
-   
-    // static async getApprenantById(id) {
-    //     try {
-    //         const [rows] = await db.query('SELECT * FROM Apprenants WHERE id = ?', [id]);
-    //         return rows[0];
-    //     } catch (error) {
-    //         console.error('Error fetching Apprenant:', error);
-    //         throw error;
-    //     }
-    // }
+    static async getEtudiantById(id) {
+        const [student] = await db.query('SELECT * FROM Apprenants WHERE id = ?', [id]);
+        return student;
+    }
+    
 }

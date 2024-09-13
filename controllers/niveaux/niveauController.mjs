@@ -5,56 +5,60 @@ import {
   deleteNiveau,
 } from "../../model/niveau.mjs";
 
-export const createNiveauController = (req, res) => {
+// Create Niveau Controller
+export const createNiveauController = async (req, res) => {
   const { niveau, description, max, min } = req.body;
 
-  createNiveau(niveau, description, max, min, (err, result) => {
-    if (err) {
-      console.error("Error creating niveau:", err);
-      return res.status(500).send("Error creating niveau: " + err.message);
-    }
+  try {
+    const result = await createNiveau(niveau, description, max, min); // Await the promise
     console.log("Niveau created:", result);
     res.redirect("/niveaux");
-  });
+  } catch (err) {
+    console.error("Error creating niveau:", err);
+    res.status(500).send("Error creating niveau: " + err.message);
+  }
 };
 
-export const getNiveauxController = (req, res) => {
-  getNiveaux((err, result) => {
-    if (err) {
-      console.error("Error fetching niveaux:", err);
-      return res.status(500).render("dashboardFormateur/niveaux/niveau", {
-        niveaux: [],
-        error: "Error fetching niveaux: " + err.message,
-        title: "Niveau",
-      });
-    }
+// Get Niveaux Controller
+export const getNiveauxController = async (req, res) => {
+  try {
+    const result = await getNiveaux(); // Await the promise
     res.render("dashboardFormateur/niveaux/niveau", {
       niveaux: result,
       title: "Niveau",
     });
-  });
+  } catch (err) {
+    console.error("Error fetching niveaux:", err);
+    res.status(500).render("dashboardFormateur/niveaux/niveau", {
+      niveaux: [],
+      error: "Error fetching niveaux: " + err.message,
+      title: "Niveau",
+    });
+  }
 };
 
-export const updateNiveauController = (req, res) => {
+// Update Niveau Controller
+export const updateNiveauController = async (req, res) => {
   const { id, niveau, description, max, min } = req.body;
 
-  updateNiveau(id, niveau, description, max, min, (err, result) => {
-    if (err) {
-      console.error("Error updating niveau:", err);
-      return res.status(500).send("Error updating niveau: " + err.message);
-    }
+  try {
+    const result = await updateNiveau(id, niveau, description, max, min); // Await the promise
     res.redirect("/niveaux");
-  });
+  } catch (err) {
+    console.error("Error updating niveau:", err);
+    res.status(500).send("Error updating niveau: " + err.message);
+  }
 };
 
-export const deleteNiveauController = (req, res) => {
+// Delete Niveau Controller
+export const deleteNiveauController = async (req, res) => {
   const { id } = req.params;
 
-  deleteNiveau(id, (err, result) => {
-    if (err) {
-      console.error("Error deleting niveau:", err);
-      return res.status(500).send("Error deleting niveau: " + err.message);
-    }
+  try {
+    const result = await deleteNiveau(id); // Await the promise
     res.redirect("/niveaux");
-  });
+  } catch (err) {
+    console.error("Error deleting niveau:", err);
+    res.status(500).send("Error deleting niveau: " + err.message);
+  }
 };

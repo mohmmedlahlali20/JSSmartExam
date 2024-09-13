@@ -13,7 +13,6 @@ if (addStudentForm) {
     addStudentForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        // Get form values
         const firstname = document.getElementById('firstName').value.trim();
         const lastname = document.getElementById('lastName').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -96,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const studentId = this.getAttribute('data-id');
             const studentRow = this.closest('tr');
 
-            // Show confirmation alert
             const result = await Swal.fire({
                 title: 'Are you sure?',
                 text: 'You will not be able to recover this student record!',

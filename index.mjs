@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import { fileURLToPath } from 'url';
 import { alreadyHaveClasse } from './model/classe.mjs';
 import session from 'express-session';
-// import crypto from 'crypto';
 import indexRouter from './routes/index.mjs';
 import studnetsRouter from './routes/studentsRouter.mjs';
 import db from './config/db.config.mjs';
@@ -27,6 +26,7 @@ app.use(session({
   secret: 'sessionOfJSSMARTEXAM',
   resave: false,
   saveUninitialized: true,
+  
   cookie: {
 
     secure: false
