@@ -1,11 +1,11 @@
 import SubjectModel from "../../model/sujet.mjs";
 
-class SubjectController {
+export default class SubjectController {
     
     async createForm(req, res) {
         try {
             const subjects = await SubjectModel.getParents();
-            res.render('dashboardFormateur/sujets/create', {title : "create a subject", subjects});
+            res.render('dashboardFormateur/sujet/createSujet', {title : "create a subject", subjects});
         } catch (error) {
             console.error('Error fetching subjects:', error);
             res.render('error', { title: 'Error', message: 'Error fetching subjects' });
@@ -91,5 +91,3 @@ class SubjectController {
         }
     }
 }
-
-export default SubjectController;

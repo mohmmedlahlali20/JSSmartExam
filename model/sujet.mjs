@@ -43,7 +43,7 @@ class SubjectModel
           const sql = `SELECT * FROM sujet WHERE id = ?`;
           const [row] = await db.query(sql, [parseInt(id)]);
           if (row) return row[0];
-                   return null;
+                    return null;
       } catch (error) {
         console.error('Error fetching subject:', error);
         throw new Error('Error fetching subject');
@@ -67,8 +67,8 @@ class SubjectModel
     static async updateSubject(id, title, description, parent_id) {
       try {
           const sql = `UPDATE sujet
-                       SET title = ?, description = ?, parent_id = ?
-                       WHERE id = ?`;
+                          SET title = ?, description = ?, parent_id = ?
+                          WHERE id = ?`;
           const [result] = await db.query(sql, [title, description, parent_id, parseInt(id)]);
           return result.affectedRows > 0;
       } catch (error) {
@@ -91,6 +91,6 @@ class SubjectModel
     
 }
 
-  
 export default SubjectModel;
+
   

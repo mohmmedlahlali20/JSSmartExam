@@ -7,25 +7,17 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        console.log('Login request:', req.body);
-
         let user = await Formateur.getFormateurByEmail(email, db) || await Apprenants.getStudentByEmail(email);
-        
+
         if (user) {
             const isMatch = await Formateur.comparePassword(password, user.password);
             if (!isMatch) {
                 console.log('Password mismatch');
-                return res.redirect('/login'); 
+                return res.redirect('/login');
             }
-            
-            req.session.user = user;
-            console.log('User authenticated:', req.session.user);
 
-            if (user.specialite) {
-                return res.redirect('/statique');
-            } else {
-                return res.redirect('/Students');
-            }
+            req.session.user = user;
+            return res.redirect(user.specialite ? '/statique' : '/Students');
         }
 
         console.log('User not found');
@@ -36,6 +28,7 @@ export const login = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 
 
