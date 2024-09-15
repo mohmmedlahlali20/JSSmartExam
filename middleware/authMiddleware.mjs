@@ -16,8 +16,7 @@ export default class Middleware {
     // }
 
     static isAuthenticated(req, res, next) {
-        console.log('User session:', req.session.user);
-        console.log('User speciality:', req.session.user ? req.session.user.specialite : 'undefined');
+
     
         if (req.session && req.session.user) {
             req.user = req.session.user;
@@ -51,4 +50,23 @@ export default class Middleware {
             next(err);
         }
     }
+
+
+
+    //static  setSubjectSession(req, res, next) {
+        //if (req.body && req.body.subjectId) {
+            //if (!req.session.sujet) {
+            //    req.session.sujet = {};
+          //  }
+          //  req.session.sujet.currentSubjectId = req.body.subjectId;
+      //  }
+       // next();
+   // }
+
+   // static getSubjectFromSession(req, res, next) {
+      //  if (req.session.sujet) {
+       //     req.currentSubjectId = req.session.sujet.currentSubjectId;
+       // }
+      //  next();
+  //  }
 }
