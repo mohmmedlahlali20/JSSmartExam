@@ -65,6 +65,7 @@ CREATE TABLE Niveau (
 
 CREATE TABLE Test (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    test_name VARCHAR(255),
     score_validation INT,
     limit_tentative INT,
     total_points INT,
@@ -97,11 +98,13 @@ CREATE TABLE Question (
     nbr_reponse INT,
     sujet_id INT,
     niveau_id INT,
+    test_id INT,
     cerated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP DEFAULT NULL,
     FOREIGN KEY (sujet_id) REFERENCES Sujet(id) ON DELETE CASCADE,
-    FOREIGN KEY (niveau_id) REFERENCES Niveau(id) ON DELETE CASCADE
+    FOREIGN KEY (niveau_id) REFERENCES Niveau(id) ON DELETE CASCADE,
+    FOREIGN KEY (test_id) REFERENCES Test(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Reponse (
