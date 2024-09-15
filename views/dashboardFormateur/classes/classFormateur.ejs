@@ -37,8 +37,9 @@
                             <td><%= student.lastname %></td>
                             <td><%= student.classe_name %></td>
                             <td>
-                                <button class="btn btn-danger btn-sm deleteStudentBtn" data-id="<%= student.id %>">Delete</button>
-                                <button class="btn btn-primary btn-sm editStudentBtn" data-student='<%= JSON.stringify(student) %>'>Edit</button>
+                                <button class="btn btn-outline-danger btn-sm deleteStudentBtn" data-id="<%= student.id %>">Delete</button>
+                                <button class="btn btn-outline-primary btn-sm editStudentBtn" data-student='<%= JSON.stringify(student) %>'>Edit</button>
+                                <button class="btn btn-outline-info btn-sm btn-custom"> assing</button>
                             </td>
                         </tr>
                     <% }); %>
@@ -91,8 +92,7 @@
                         <input type="hidden" id="classeId" name="classe_id" value="<%= classeId %>">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Student</button>
+                        <button type="submit" class="btn btn-outline-primary">Add Student</button>
                     </div>
                 </form>
             </div>
@@ -148,8 +148,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-outline-primary">Save changes</button>
                     </div>
                 </form>
             </div>

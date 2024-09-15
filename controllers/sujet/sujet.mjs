@@ -1,93 +1,124 @@
 import SubjectModel from "../../model/sujet.mjs";
 
-export default class SubjectController {
-    
-    async createForm(req, res) {
+export class SubjectController {
+    // Create form to create a subject
+    createForm = async (req, res) => {
         try {
+            if (!req.session.user) {
+                throw new Error('User not logged in');
+            }
+
+
+            const formateurId = req.session.user.id;
             const subjects = await SubjectModel.getParents();
-            res.render('dashboardFormateur/sujet/createSujet', {title : "create a subject", subjects});
+            res.render('dashboardFormateur/sujets/create', {
+                title: "Create a Subject",
+                subjects,
+                formateurId,
+
+            });
         } catch (error) {
             console.error('Error fetching subjects:', error);
-            res.render('error', { title: 'Error', message: 'Error fetching subjects' });
+            res.status(500).json({ error: 'Error fetching subjects' });
+        }
+    };
+
+    // Create a new subject
+    async  createSubject(req, res) {
+        try {
+            const { title, description, parent_id } = req.body;
+
+            // Convert empty string to null for parent_id
+            const parentId = parent_id === '' ? null : parent_id;
+
+            if (!req.session.user) {
+                throw new Error('User not logged in');
+            }
+
+            const formateur_id = req.session.user.id;
+            console.log('Formateur ID:', formateur_id);
+
+            await SubjectModel.createSubject(title, description, parentId, formateur_id);
+            console.log(
+                title,
+                description,
+                parentId,
+                formateur_id
+
+            )
+
+            res.redirect('/sujets/create');
+        } catch (error) {
+            console.error('Error creating subject:', error);
+            res.status(500).json({ error: 'Error creating subject' });
         }
     }
-    
-    async updateForm(req, res) {
+
+    // Update form for editing a subject
+    updateForm = async (req, res) => {
         const { id } = req.params;
         try {
             const subject = await SubjectModel.getSubjectbyId(id);
-            if (!subject)  return res.render('error', { title: 'Not Found', message: 'Subject not found' });
+            if (!subject) return res.status(404).json({ error: 'Subject not found' });
             const subjects = await SubjectModel.getParents();
             res.render('dashboardFormateur/sujets/edit', { title: 'Edit Subject', subject, subjects });
         } catch (error) {
             console.error('Error fetching subject or subjects:', error);
-            res.render('error', { title: 'Error', message: 'Error fetching subject or subjects for update form' });
+            res.status(500).json({ error: 'Error fetching subject or subjects for update form' });
         }
-    }
+    };
 
-    async create(req, res){
-        const {title, description, parent_id} = req.body;
-        try {
-            const result = await SubjectModel.createSubject(title, description, parent_id);
-            if(!result) return res.status(500).render('error', { title: 'Not Found', message: 'Subject not inserted' });
-            res.status(201).redirect('/sujets');
-        } catch (error) {
-            console.error('Error creating subject:', error);
-            res.render('dashboardFormateur/sujets/create', { title: 'Create Subject', error: 'Error creating subject' });
-        }
-    }
-
-    async getAll(req, res){
+    // Get all subjects
+    getAll = async (req, res) => {
         try {
             const subjects = await SubjectModel.getAllSubjects();
-            if(!subjects) return res.status(500).render('error', { title: 'Not Found', message: 'failed to fetch data' });
-            res.status(200).render('dashboardFormateur/sujets/index', { title: 'Subjects List', subjects });
+            const formateur_id = req.session.user;
+            console.log(subjects)
+            res.status(200).render('dashboardFormateur/sujets/index', { title: 'Subjects List', subjects  , formateur_id});
         } catch (error) {
             console.error('Error fetching subjects:', error);
-            res.render('error', { title: 'Error', message: 'Error fetching subjects' });
+            res.redirect('/login')
         }
-    }
+    };
 
-    async getOne(req, res){
-        const {id} = req.params.id;
+    // Get one subject by ID
+    getOne = async (req, res) => {
+        const { id } = req.params;
         try {
             const subject = await SubjectModel.getSubjectbyId(id);
-            if(!subject) return res.status(404).render('error', { title: 'Not Found', message: 'failed to fetch data' });
+            if (!subject) return res.status(404).json({ error: 'Subject not found' });
             const subs = await SubjectModel.getSubsForSubject(id);
             res.status(200).render(`dashboardFormateur/sujets/${id}`, { title: 'Subject details', subject, subs });
         } catch (error) {
             console.error('Error fetching subject:', error);
-            res.render('error', { title: 'Error', message: 'Error fetching subject' });
+            res.status(500).json({ error: 'Error fetching subject' });
         }
-    }
+    };
 
-    // async getSubs(req, res){
-        
-    // }
-
-    async update(req, res){
-        const {id} = req.params.id;
-        const {title, description, parent_id} = req.body;
+    // Update an existing subject
+    update = async (req, res) => {
+        const { id } = req.params;
+        const { title, description, parent_id } = req.body;
         try {
             const subject = await SubjectModel.updateSubject(title, description, parent_id, id);
-            if(!subject) return res.status(500).render('error', { title: 'Not Found', message: 'failed to fetch data' });
-            res.status(201).redirect(`/sujets/${id}`)
+            if (!subject) return res.status(500).json({ error: 'Failed to update subject' });
+            res.status(201).redirect(`/sujets/${id}`);
         } catch (error) {
             console.error('Error updating subject:', error);
-            res.status(201).render('dashboardFormateur/sujets/edit', { title: 'Edit Subject', subject: { id, title, description, parent_id }, error: 'Error updating subject' });
+            res.status(500).json({ error: 'Error updating subject' });
         }
+    };
 
-    }
-
-    async delete(req, res){
-        const {id} = req.params.id;
+    // Delete a subject
+    delete = async (req, res) => {
+        const { id } = req.params;
         try {
             const deleted = await SubjectModel.deleteSubject(id);
-            if(!deleted) return res.status(500).render('error', { title: 'error', message: 'failed to delete' });
-            res.status(200).redirect('/sujets')
+            if (!deleted) return res.status(500).json({ error: 'Failed to delete subject' });
+            res.status(200).redirect('/sujets');
         } catch (error) {
             console.error('Error deleting subject:', error);
-            res.status(500).render('error', { title: 'Error', message: 'Error deleting subject' });
+            res.status(500).json({ error: 'Error deleting subject' });
         }
-    }
+    };
 }

@@ -1,29 +1,26 @@
-import  express  from "express";
-import SubjectController from "../controllers/sujet/sujet.mjs";
-// import methodOverride from "method-override";
+import express from "express";
+import { SubjectController } from '../controllers/sujet/sujet.mjs';
 
 const router = express.Router();
 const subjectController = new SubjectController();
 
-// router.use(methodOverride('_method'));
+// Rendering the forms
+router.get('/create', subjectController.createForm);
 
-// rendering the forms
-router.get('/:id/create', subjectController.createForm.bind(subjectController));
-router.get('/:id/edit', subjectController.updateForm.bind(subjectController));
 
-// all & new
-router.route('/')
-    .get(subjectController.getAll.bind(subjectController))
-    .post(subjectController.create.bind(subjectController));
+router.post('/create', subjectController.createSubject);
 
-// one & update
+// All & new subjects
+router.route('/all-subjects')
+    .get(subjectController.getAll)
+    .post(subjectController.updateForm);
+
+// One & update subject
 router.route('/:id')
-    .get(subjectController.getOne.bind(subjectController))
-    .post(subjectController.update.bind(subjectController));
+    .get(subjectController.getOne)
+    .put(subjectController.update);
 
-// destroy
-router.post('/:id/delete', subjectController.delete.bind(subjectController));
-
-
+// Destroy subject (optional if needed)
+// router.delete('/:id', subjectController.delete);
 
 export default router;

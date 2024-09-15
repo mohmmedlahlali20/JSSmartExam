@@ -1,0 +1,52 @@
+<%- include('../../layouts/navbar.ejs') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h1 class="mb-4 text-center">Create a New Subject</h1>
+            <form action="/sujets/create" method="POST" class="p-4 border rounded shadow-sm bg-light">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Subject Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Enter subject title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter subject description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="parentSubject" class="form-label">Parent Subject</label>
+                    <select class="form-select" id="parentSubject" name="parent_id">
+                        <option value="">Select Parent Subject (Optional)</option>
+                        <% subjects.forEach(function(subject) { %>
+                            <option value="<%= subject.id %>"><%= subject.title %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <input type="hidden" name="formateur_id" value="<%= formateurId %>">
+
+                <div class="d-grid">
+                    <button type="submit" class="w-25 btn btn-primary">Create Subject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../../layouts/script.ejs') %>
+
+
+<script>
+    if (response.ok) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Subject created successfully!',
+        });
+    }else{
+        Swal.fire({
+            icon : 'error',
+            title : 'faild',
+            text : 'nop dosn\'t  create '
+        })
+    }
+</script>
