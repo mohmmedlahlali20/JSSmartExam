@@ -88,7 +88,7 @@ export class SubjectController {
             const subject = await SubjectModel.getSubjectbyId(id);
             if (!subject) return res.status(404).json({ error: 'Subject not found' });
             const subs = await SubjectModel.getSubsForSubject(id);
-            res.status(200).render(`dashboardFormateur/sujets/${id}`, { title: 'Subject details', subject, subs });
+            res.status(200).redirect(`/sujets/${id}`, { title: 'Subject details', subject, subs });
         } catch (error) {
             console.error('Error fetching subject:', error);
             res.redirect('/login')
