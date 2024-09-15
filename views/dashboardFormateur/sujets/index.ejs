@@ -10,26 +10,43 @@
     }
 
     .card-title {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        font-weight: bold;
     }
 
     .card-text {
         color: #6c757d;
+        font-size: 1rem;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #343a40;
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        color: #495057;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 0.5rem;
     }
 </style>
 
 <div class="container mt-5">
-    <h1 class="mb-4 text-center">Subjects List</h1>
+    <h1 class="header-title text-center">Subjects List</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>Subjects</h2>
+            <h2 class="section-title">Subjects</h2>
             <% subjects.forEach(subject => { %>
                 <% if (!subject.parent_id) { %> <!-- Display parent subjects -->
                 <div class="col-md-12 mb-4">
                     <div class="card border-0 shadow-sm rounded">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold"><%= subject.title %></h5>
+                            <h5 class="card-title"><%= subject.title %></h5>
                             <p class="card-text"><%= subject.description %></p>
                         </div>
                     </div>
@@ -39,13 +56,13 @@
         </div>
 
         <div class="col-md-6">
-            <h2>Sub Subjects</h2>
+            <h2 class="section-title">Sub Subjects</h2>
             <% subjects.forEach(subject => { %>
                 <% if (subject.parent_id) { %> <!-- Display sub-subjects -->
                 <div class="col-md-12 mb-4">
                     <div class="card border-0 shadow-sm rounded">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold"><%= subject.title %></h5>
+                            <h5 class="card-title"><%= subject.title %></h5>
                             <p class="card-text"><%= subject.description %></p>
                         </div>
                     </div>
@@ -56,7 +73,7 @@
     </div>
 
     <% if (subjects.length === 0) { %>
-        <p class="text-center">No subjects found.</p>
+        <p class="text-center text-3xl">No subjects found.</p>
     <% } %>
 </div>
 

@@ -19,7 +19,7 @@ export class SubjectController {
             });
         } catch (error) {
             console.error('Error fetching subjects:', error);
-            res.status(500).json({ error: 'Error fetching subjects' });
+            res.redirect('/login')
         }
     };
 
@@ -50,7 +50,7 @@ export class SubjectController {
             res.redirect('/sujets/create');
         } catch (error) {
             console.error('Error creating subject:', error);
-            res.status(500).json({ error: 'Error creating subject' });
+            res.redirect('/login')
         }
     }
 
@@ -64,7 +64,7 @@ export class SubjectController {
             res.render('dashboardFormateur/sujets/edit', { title: 'Edit Subject', subject, subjects });
         } catch (error) {
             console.error('Error fetching subject or subjects:', error);
-            res.status(500).json({ error: 'Error fetching subject or subjects for update form' });
+            res.redirect('/login')
         }
     };
 
@@ -91,7 +91,7 @@ export class SubjectController {
             res.status(200).render(`dashboardFormateur/sujets/${id}`, { title: 'Subject details', subject, subs });
         } catch (error) {
             console.error('Error fetching subject:', error);
-            res.status(500).json({ error: 'Error fetching subject' });
+            res.redirect('/login')
         }
     };
 
@@ -105,7 +105,7 @@ export class SubjectController {
             res.status(201).redirect(`/sujets/${id}`);
         } catch (error) {
             console.error('Error updating subject:', error);
-            res.status(500).json({ error: 'Error updating subject' });
+            res.redirect('/login')
         }
     };
 
@@ -118,7 +118,7 @@ export class SubjectController {
             res.status(200).redirect('/sujets');
         } catch (error) {
             console.error('Error deleting subject:', error);
-            res.status(500).json({ error: 'Error deleting subject' });
+            res.redirect('/login')
         }
     };
 }
