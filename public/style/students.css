@@ -1,54 +1,53 @@
 .btnAddStudents {
-    background-color: #232e53;
-    color: white;
-    border: none;
-    padding: 0.85rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
-    margin-bottom: .8rem;
-    float: right;
+  background-color: #232e53;
+  color: white;
+  border: none;
+  padding: 0.85rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+  margin-bottom: 0.8rem;
+  float: right;
 }
 
 .MED_tabels {
-    display: flex;
-position: relative;
-left: 8%;
-top: -40%;
-    flex-direction: column;
+  display: flex;
+  position: relative;
+  left: 8%;
+  top: -40%;
+  flex-direction: column;
 }
 
-
 .popup-class {
-    border-radius: 20px;
-    background-color: #f8f9fa;
+  border-radius: 20px;
+  background-color: #f8f9fa;
 }
 
 .title-class {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .confirm-button-class {
-    background-color: #232e53;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 16px;
+  background-color: #232e53;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .swal2-input {
-    background-color: #b0b3bb;
-    border: none;
-    border-radius: 15px;
-    font-size: 14px;
+  background-color: #b0b3bb;
+  border: none;
+  border-radius: 15px;
+  font-size: 14px;
 }
 
 .swal2-popup {
-    padding: 20px;
+  padding: 20px;
 }
