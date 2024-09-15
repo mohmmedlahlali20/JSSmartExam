@@ -14,13 +14,15 @@
   padding: 20px;
   line-height: 1.6;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .imane-niveau-container {
   max-width: 1200px;
-  margin: 30px 10px 0 0;
-  width: calc(100% - 250px);
+  margin: 30px auto;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .imane-niveau-header,
@@ -29,6 +31,7 @@
   text-align: center;
   font-weight: 800;
   text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .imane-card-niveau {
@@ -36,9 +39,16 @@
   border-radius: 15px;
   padding: 30px;
   margin-bottom: 30px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-left: 100px;
+}
+
+.imane-card-niveau:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .imane-card-niveau::before {
@@ -51,6 +61,11 @@
   height: 100px;
   border-radius: 50%;
   z-index: 0;
+  transition: transform 0.3s ease;
+}
+
+.imane-card-niveau:hover::before {
+  transform: scale(1.2);
 }
 
 #imane-form-container {
@@ -67,6 +82,7 @@
   margin-bottom: 5px;
   font-weight: 600;
   color: var(--light-blue);
+  transition: color 0.3s ease;
 }
 
 .imane-form-input {
@@ -78,12 +94,14 @@
   transition: all 0.3s ease;
   background-color: var(--navy);
   color: var(--off-white);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .imane-form-input:focus {
   outline: none;
   border-color: var(--light-blue);
-  box-shadow: 0 0 0 3px rgba(119, 141, 169, 0.2);
+  box-shadow: 0 0 0 3px rgba(119, 141, 169, 0.2),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .imane-niveau-button {
@@ -99,11 +117,12 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .imane-niveau-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 10px rgba(65, 90, 119, 0.4);
+  box-shadow: 0 6px 12px rgba(65, 90, 119, 0.4);
 }
 
 .imane-niveau-button::after {
@@ -126,6 +145,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 15px;
+  overflow-x: auto;
 }
 
 .imane-table-header {
@@ -135,6 +155,7 @@
   text-align: left;
   font-weight: 600;
   text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .imane-table-header:first-child {
@@ -155,6 +176,7 @@
   background-color: var(--navy);
   padding: 15px;
   color: var(--off-white);
+  transition: background-color 0.3s ease;
 }
 
 .imane-table-row {
@@ -164,6 +186,10 @@
 .imane-table-row:hover {
   transform: scale(1.02);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.imane-table-row:hover .imane-table-cell {
+  background-color: var(--blue-gray);
 }
 
 .imane-table-row-first-cell {
@@ -191,6 +217,7 @@
   font-size: 0.9em;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .imane-update-btn {
@@ -205,7 +232,7 @@
 
 .imane-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .imane-update-btn:hover {
@@ -235,7 +262,7 @@
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   position: relative;
   animation: modalFadeIn 0.3s;
 }
@@ -251,6 +278,7 @@
   font-size: 24px;
   color: var(--off-white);
   margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .imane-close {
@@ -259,11 +287,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.3s, transform 0.3s;
 }
 
 .imane-close:hover {
   color: var(--off-white);
+  transform: rotate(90deg);
 }
 
 .imane-update-button {
@@ -274,22 +303,34 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .imane-update-button:hover {
   background-color: var(--light-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 768px) {
-  #imane-body-class {
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 480px) {
+  .imane-niveau-header,
+  .imane-niveau-subheader {
+    font-size: 1.5em;
   }
 
-  .imane-niveau-container {
-    margin: 20px 0 0 0;
+  .imane-form-input,
+  .imane-niveau-button {
+    font-size: 14px;
+  }
+
+  .imane-action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .imane-button {
     width: 100%;
   }
 }

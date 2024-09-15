@@ -8,22 +8,16 @@
         <thead>
           <tr>
             <th>Score Validation</th>
-            <th>Droit de Vue</th>
+            <th>Limit Tentative</th>
             <th>Total Points</th>
           </tr>
         </thead>
         <tbody>
           <% for(let i = 0; i < tests.length; i++) { %>
           <tr>
-            <td><%= tests[i].scoreValidation %></td>
-            <td>
-              <span
-                class="imane-badge <%= tests[i].droitDeVue ? 'imane-badge-green' : 'imane-badge-red' %>"
-              >
-                <%= tests[i].droitDeVue ? 'Oui' : 'Non' %>
-              </span>
-            </td>
-            <td><%= tests[i].totalPoints %></td>
+            <td><%= tests[i].score_validation %></td>
+            <td><%= tests[i].limit_tentative %></td>
+            <td><%= tests[i].total_points %></td>
           </tr>
           <% } %>
         </tbody>

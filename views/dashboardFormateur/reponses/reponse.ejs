@@ -1,0 +1,155 @@
+<%- include('../../layouts/navbar.ejs') %>
+
+<main id="imane-body-class">
+  <div class="imane-reponse-container">
+    <div class="imane-card-reponse">
+      <h1 class="imane-reponse-header">Reponse Management</h1>
+
+      <h2 class="imane-reponse-subheader">Add New Reponse</h2>
+      <form id="imane-form-container" action="/create-reponse" method="POST">
+        <div class="imane-form-group">
+          <label class="imane-form-label" for="reponse">Reponse:</label>
+          <textarea
+            class="imane-form-input"
+            id="reponse"
+            name="reponse"
+            required
+          ></textarea>
+        </div>
+        <div class="imane-form-group">
+          <label class="imane-form-label" for="is_correct">Is Correct:</label>
+          <select
+            class="imane-form-input"
+            id="is_correct"
+            name="is_correct"
+            required
+          >
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+
+        <button class="imane-reponse-button" type="submit">
+          Add New Reponse
+        </button>
+      </form>
+    </div>
+
+    <div class="imane-card-reponse">
+      <h2 class="imane-reponse-subheader">Reponses</h2>
+      <table id="imane-table-container">
+        <thead>
+          <tr class="imane-table-row">
+            <th class="imane-table-header">Reponse</th>
+            <th class="imane-table-header">Is Correct</th>
+            <th class="imane-table-header">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < reponses.length; i++) { %>
+          <tr class="imane-table-row">
+            <td class="imane-table-cell"><%= reponses[i].reponse %></td>
+            <td class="imane-table-cell">
+              <%= reponses[i].is_correct ? 'Yes' : 'No' %>
+            </td>
+            <td class="imane-table-cell">
+              <div class="imane-action-buttons">
+                <button
+                  class="imane-reponse-button imane-update-btn"
+                  type="button"
+                  onclick="openUpdateModal(
+                    '<%= reponses[i].id %>',
+                    '<%= reponses[i].reponse %>',
+                    '<%= reponses[i].is_correct %>',
+                    '<%= reponses[i].question_id %>'
+                  )"
+                >
+                  Edit
+                </button>
+                <form
+                  action="/delete-reponse/<%= reponses[i].id %>"
+                  method="POST"
+                  class="imane-inline-form"
+                >
+                  <button
+                    class="imane-reponse-button imane-delete-btn"
+                    type="submit"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div id="imane-update-modal" class="imane-modal">
+  <div class="imane-modal-content">
+    <div class="imane-modal-header">
+      <h2 class="imane-modal-title">Edit Reponse</h2>
+      <button class="imane-close">&times;</button>
+    </div>
+    <form id="imane-update-form" action="/update-reponse" method="POST">
+      <input type="hidden" id="imane-update-id" name="id" />
+      <div class="imane-form-group">
+        <label class="imane-form-label" for="imane-update-reponse"
+          >Reponse:</label
+        >
+        <textarea
+          class="imane-form-input"
+          id="imane-update-reponse"
+          name="reponse"
+          required
+        ></textarea>
+      </div>
+      <div class="imane-form-group">
+        <label class="imane-form-label" for="imane-update-is_correct"
+          >Is Correct:</label
+        >
+        <select
+          class="imane-form-input"
+          id="imane-update-is_correct"
+          name="is_correct"
+          required
+        >
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+      </div>
+      <button type="submit" class="imane-update-button">Update Reponse</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("imane-update-modal");
+    const closeModal = document.querySelector(".imane-close");
+
+    // Fonction pour ouvrir le modal
+    window.openUpdateModal = function (id, reponse, is_correct) {
+      document.getElementById("imane-update-id").value = id;
+      document.getElementById("imane-update-reponse").value = reponse;
+      document.getElementById("imane-update-is_correct").value = is_correct;
+
+      modal.style.display = "flex";
+    };
+
+    // Fonction pour fermer le modal
+    closeModal.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  });
+</script>
+<!-- <%- include('../../layouts/script.ejs') %> -->
