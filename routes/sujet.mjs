@@ -8,7 +8,7 @@ const subjectController = new SubjectController();
 // router.use(methodOverride('_method'));
 
 // rendering the forms
-router.get('/:id/create', subjectController.createForm.bind(subjectController));
+router.get('/create', subjectController.createForm.bind(subjectController));
 router.get('/:id/edit', subjectController.updateForm.bind(subjectController));
 
 // all & new

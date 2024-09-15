@@ -54,16 +54,13 @@ export default class SubjectController {
             const subject = await SubjectModel.getSubjectbyId(id);
             if(!subject) return res.status(404).render('error', { title: 'Not Found', message: 'failed to fetch data' });
             const subs = await SubjectModel.getSubsForSubject(id);
-            res.status(200).render(`dashboardFormateur/sujets/${id}`, { title: 'Subject details', subject, subs });
+            res.status(200).redirect(`/sujets/${id}`, { title: 'Subject details', subject, subs });
         } catch (error) {
             console.error('Error fetching subject:', error);
             res.render('error', { title: 'Error', message: 'Error fetching subject' });
         }
     }
 
-    // async getSubs(req, res){
-        
-    // }
 
     async update(req, res){
         const {id} = req.params.id;
