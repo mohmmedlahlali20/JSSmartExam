@@ -2,11 +2,14 @@ import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
-import { alreadyHaveClasse } from './model/classe.mjs';
 import session from 'express-session';
 import indexRouter from './routes/index.mjs';
-import studnetsRouter from './routes/studentsRouter.mjs';
+import studentsRouter from './routes/studentsRouter.mjs';
+import sujetRouter from './routes/sujet.mjs';
 import db from './config/db.config.mjs';
+
+import Middleware from './middleware/authMiddleware.mjs';  
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,7 +19,6 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(morgan('dev'));
 
 app.use(express.urlencoded({ extended: false }));
@@ -26,35 +28,8 @@ app.use(session({
   secret: 'sessionOfJSSMARTEXAM',
   resave: false,
   saveUninitialized: true,
-  
-  cookie: {
-
-    secure: false
-  }
-
+  cookie: { secure: false }
 }));
-
-app.use(async (req, res, next) => {
-  try {
-    const user = req.session?.user;
-    if (user) {
-      const hasClass = await alreadyHaveClasse(user.id); 
-      console.log('User:', user.id, 'Has class:', hasClass);
-      res.locals.hasClass = hasClass;
-    } else {
-      res.locals.hasClass = false;
-    }
-    res.locals.user = user || null;
-    next();
-  } catch (err) {
-    console.error('Error in middleware:', err);
-    next(err);
-  }
-});
-
-
-
-
 
 app.use((req, res, next) => {
   req.db = db;
@@ -63,8 +38,8 @@ app.use((req, res, next) => {
 
 
 app.use('/', indexRouter);
-app.use('/students', studnetsRouter);
-
+app.use('/students', studentsRouter);
+app.use('/sujet', sujetRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

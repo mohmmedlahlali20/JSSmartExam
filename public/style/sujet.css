@@ -1,0 +1,15 @@
+.form-imd-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .form-imd-container h1 {
+    margin-bottom: 30px;
+  }
+  .form-imd-container .btn-custom {
+    background-color: #007bff;
+    color: white;
+  }

@@ -1,5 +1,5 @@
 
-import { getFormateurByEmail, comparePassword } from '../../model/formateur.mjs';
+import {Formateur} from '../../model/formateur.mjs';
 import { Apprenants } from '../../model/apprenats.mjs'; 
 import db from '../../config/db.config.mjs';
 
@@ -7,25 +7,17 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        console.log('Login request:', req.body);
+        let user = await Formateur.getFormateurByEmail(email, db) || await Apprenants.getStudentByEmail(email);
 
-        let user = await getFormateurByEmail(email, db) || await Apprenants.getStudentByEmail(email);
-        
         if (user) {
-            const isMatch = await comparePassword(password, user.password);
+            const isMatch = await Formateur.comparePassword(password, user.password);
             if (!isMatch) {
                 console.log('Password mismatch');
-                return res.redirect('/login'); 
+                return res.redirect('/login');
             }
-            
-            req.session.user = user;
-            console.log('User authenticated:', req.session.user);
 
-            if (user.specialite) {
-                return res.redirect('/statique');
-            } else {
-                return res.redirect('/dashboard/student');
-            }
+            req.session.user = user;
+            return res.redirect(user.specialite ? '/statique' : '/Students');
         }
 
         console.log('User not found');
@@ -36,6 +28,7 @@ export const login = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 
 

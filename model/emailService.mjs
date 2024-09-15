@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 
 export class Email {
+
+  
   static transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {

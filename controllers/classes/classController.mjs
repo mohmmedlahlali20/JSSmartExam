@@ -1,9 +1,9 @@
-import { createNewClass, alreadyHaveClasse } from '../../model/classe.mjs';
+import { Classe} from '../../model/classe.mjs';
 
 export const showClasse = async (req, res) => {
     const formateurId = req.session.user.id;
     try {
-        const hasClass = await alreadyHaveClasse(formateurId);
+        const hasClass = await Classe.alreadyHaveClasse(formateurId);
 
         if (hasClass) {
             return res.redirect('/statique');
@@ -15,8 +15,6 @@ export const showClasse = async (req, res) => {
         res.status(500).send('An error occurred');
     }
 };
-
-
 
 
 export const createClass = async (req, res) => {
@@ -31,8 +29,8 @@ export const createClass = async (req, res) => {
     }
 
     try {
-        await createNewClass(className, formateurId);
-        res.status(201).json({ success: true, message: 'Class created successfully' });
+        await Classe.createNewClass(className, formateurId);
+        res.redirect('/add_etudiant');  
     } catch (error) {
         console.error('Error creating class:', error);
         res.status(500).json({ success: false, message: error.message });

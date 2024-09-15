@@ -1,6 +1,7 @@
 import db from '../config/db.config.mjs';
 
-export const createNewClass = async (className, formateurId) => {
+export class Classe{
+static createNewClass = async (className, formateurId) => {
     try {
         const [existingClass] = await db.query('SELECT * FROM Classe WHERE formateur_id = ?', [formateurId]);
         if (existingClass.length > 0) {
@@ -18,7 +19,8 @@ export const createNewClass = async (className, formateurId) => {
     }
 }
 
-export const alreadyHaveClasse = async (formateurId) => {
+
+static alreadyHaveClasse = async (formateurId) => {
     try {
         const [rows] = await db.query('SELECT COUNT(*) as count FROM Classe WHERE formateur_id = ?', [formateurId]);
         console.log('Class count:', rows[0].count);
@@ -28,6 +30,11 @@ export const alreadyHaveClasse = async (formateurId) => {
         throw err;
     }
 };
+
+}
+
+
+
 
 
 // export const getFormateurIdByClassId = async (classId, db) => {
